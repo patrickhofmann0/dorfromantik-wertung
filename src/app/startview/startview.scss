@@ -1,0 +1,28 @@
+// Center all content in the app
+:host {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	width: 100vw;
+
+}
+
+.start-card {
+  margin: 12px;
+  padding: 16px;
+  height: 50dvh;
+
+  //align center
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.start-button {
+  margin-top: 16px;
+  width: 100%;
+}
