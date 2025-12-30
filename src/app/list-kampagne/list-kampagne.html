@@ -1,36 +1,35 @@
 <div class="form-container">
     <h1>Liste der Kampagnen</h1>
 
-    <mat-accordion>
-    @for (kampagne of kampagnenList; track kampagne.id) {
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-        <mat-panel-title>
-            {{ kampagne.name }}
-        </mat-panel-title>
-            <mat-panel-description>
-        </mat-panel-description>
-        </mat-expansion-panel-header>
+    <button matButton="tonal" class="create-kampagne" 
+    routerLink="/create" type="button">
+        Kampagne erstellen
+    </button>
 
-        <p>Spielleiter: {{ kampagne.spielleiter }}</p>
-        <p>Anzahl der Spieler: {{ kampagne.anzahlSpieler }}</p>
-        <span>
-            <button matButton="tonal"
-                color="primary"
-                type="button"
-                style="margin-right: 12px;"
-                (click)="navigateToDetails(kampagne.id)">
-                Zur Kampagne
-            </button>
-            <button matButton="tonal"
-                color="warn"
-                type="button"   
-                (click)="deleteKampagne(kampagne.id)"
-                >
-                Kampagne löschen
-            </button>
-        </span>
-    </mat-expansion-panel>
-    }
+    <mat-accordion>
+
+        @for (kampagne of kampagnenList; track kampagne.id) {
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ kampagne.name }}
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <p>Spielleiter: {{ kampagne.spielleiter }}</p>
+            <p>Anzahl der Spieler: {{ kampagne.anzahlSpieler }}</p>
+            <span>
+                <button matButton="tonal" color="primary" type="button" style="margin-right: 12px;"
+                    (click)="navigateToDetails(kampagne.id)">
+                    Zur Kampagne
+                </button>
+                <button matButton="tonal" color="warn" type="button" (click)="deleteKampagne(kampagne.id)">
+                    Kampagne löschen
+                </button>
+            </span>
+        </mat-expansion-panel>
+        }
     </mat-accordion>
 </div>

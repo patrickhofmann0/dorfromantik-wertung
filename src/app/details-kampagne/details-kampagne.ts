@@ -3,10 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { KampagneService } from '../kampagne-service';
 import { Kampagne } from '../model/kampagne';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-details-kampagne',
-  imports: [MatExpansionModule],
+  imports: [MatExpansionModule, MatButtonModule],
   templateUrl: './details-kampagne.html',
   styleUrl: './details-kampagne.scss',
 })
