@@ -44,9 +44,17 @@ jobs:
             cd e2e
             npx playwright install --with-deps
 
-        - name: Run Playwright tests
+        - name: Run app server
           run: | 
             npm run start &
+
+        - name: Wait for server to be ready
+          run: |
+            cd e2e
+            npx wait-on http://localhost:4200
+
+        - name: Run Playwright tests
+          run: | 
             cd e2e
             npx playwright test
 
@@ -69,6 +77,6 @@ jobs:
 
         - name: Install dependencies
           run: npm ci
-          
+
         - name: Build app
           run: npm run build

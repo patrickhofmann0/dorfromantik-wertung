@@ -9,6 +9,7 @@
     "test-ui": "npx playwright test --ui",
     "test": "npx playwright test",
     "test-codegen": "npx playwright codegen http://localhost:4200",
+    "test-wait": "npx wait-on http://localhost:4200",
     "mcp-start": "npx @playwright/mcp@latest --port 5210"
   },
   "keywords": [],
@@ -18,6 +19,7 @@
   "devDependencies": {
     "@playwright/mcp": "^0.0.51",
     "@playwright/test": "^1.57.0",
-    "@types/node": "^25.0.0"
+    "@types/node": "^25.0.0",
+    "wait-on": "^9.0.3"
   }
 }
