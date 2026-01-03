@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Kampagne } from './model/kampagne';
 import { L } from '@angular/cdk/keycodes';
+import { Wertung } from './model/wertung';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,15 @@ export class KampagneService {
   getKampagneById(id: string): Kampagne | undefined {
     const kampagnenList: Kampagne[] = localStorage.getItem(this.keyKampagnenList) ? JSON.parse(localStorage.getItem(this.keyKampagnenList)!) : [];
     return kampagnenList.find(kampagne => kampagne.id === id);
+  }
+
+    addWertungToKampagne(kampagneId: string, wertung: Wertung) {
+    const kampagnenList: Kampagne[] = localStorage.getItem(this.keyKampagnenList) ? JSON.parse(localStorage.getItem(this.keyKampagnenList)!) : [];
+    const kampagne = kampagnenList.find(k => k.id === kampagneId);
+    if (kampagne) {
+      kampagne.wertungen.push(wertung);
+      localStorage.setItem(this.keyKampagnenList, JSON.stringify(kampagnenList));
+    }
   }
   
 }

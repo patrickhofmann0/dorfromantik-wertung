@@ -21,9 +21,14 @@ export class WertungCalculator {
     }
 
     calculateTotalScore(): number {
-        return this.calculateAufragScore() + this.calculatLaengsteScore() + this.calculateFahnenScore();
+        return this.calculateAufragScore() 
+        + this.calculatLaengsteScore() 
+        + this.calculateFahnenScore()
+        + this.calculateFreigespieltScore();
     }
 
-
+    calculateFreigespieltScore(): number {
+        return this.wertung.getFreigespieltPunkteListe().reduce((a, b) => a + b, 0);
+    }
 
 }

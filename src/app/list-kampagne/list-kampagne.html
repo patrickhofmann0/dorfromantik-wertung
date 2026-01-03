@@ -14,14 +14,23 @@
                 <mat-panel-title>
                     {{ kampagne.name }}
                 </mat-panel-title>
-                <mat-panel-description>
-                </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <p>Spielleiter: {{ kampagne.spielleiter }}</p>
-            <p>Anzahl der Spieler: {{ kampagne.anzahlSpieler }}</p>
+            <table>
+                <tr>
+                    <td>Spielleiter</td>
+                    <td>{{ kampagne.spielleiter }}</td>
+                </tr> 
+                <tr>
+                    <td>Anzahl der Spieler</td>
+                    <td>{{ kampagne.anzahlSpieler }}</td>
+                </tr>
+            </table>
             <span>
-                <button matButton="tonal" color="primary" type="button" style="margin-right: 12px;"
+                <button matButton="tonal"
+                 color="primary" 
+                 type="button" 
+                 style="margin-right: 12px; margin-bottom: 12px;"
                     (click)="navigateToDetails(kampagne.id)">
                     Zur Kampagne
                 </button>

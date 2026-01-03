@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { ListKampagne } from './list-kampagne';
 
@@ -8,16 +10,20 @@ describe('ListKampagne', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListKampagne]
-    })
-    .compileComponents();
+      imports: [ListKampagne, RouterTestingModule, NoopAnimationsModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ListKampagne);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load kampagnen on init', () => {
+    expect(component.kampagnenList).toBeDefined();
+    expect(component.kampagnenList.length).toBeGreaterThanOrEqual(0);
   });
 });

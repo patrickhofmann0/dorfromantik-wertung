@@ -18,7 +18,7 @@ export const routes: Routes = [
     },
     {
         component: CreateWertung, 
-        path: 'create-wertung', 
+        path: 'create-wertung/:id', 
         pathMatch: 'full'
     },
     {
