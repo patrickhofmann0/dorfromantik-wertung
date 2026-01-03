@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DetailsKampagne } from './details-kampagne';
 import { KampagneService } from '../kampagne-service';
@@ -23,7 +22,7 @@ describe('DetailsKampagne', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DetailsKampagne, RouterTestingModule, NoopAnimationsModule],
+      imports: [DetailsKampagne, RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

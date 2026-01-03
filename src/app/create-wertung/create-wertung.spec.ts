@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CreateWertung } from './create-wertung';
 
@@ -12,7 +10,7 @@ describe('CreateWertung', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateWertung, RouterTestingModule, NoopAnimationsModule],
+      imports: [CreateWertung, RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

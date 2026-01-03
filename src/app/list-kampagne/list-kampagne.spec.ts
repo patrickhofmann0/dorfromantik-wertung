@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ListKampagne } from './list-kampagne';
@@ -10,7 +9,7 @@ describe('ListKampagne', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListKampagne, RouterTestingModule, NoopAnimationsModule],
+      imports: [ListKampagne, RouterTestingModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ListKampagne);
