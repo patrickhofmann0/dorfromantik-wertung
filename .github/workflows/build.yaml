@@ -36,27 +36,22 @@ jobs:
         - name: Install dependencies
           run: | 
             npm ci
-            cd e2e
-            npm ci
 
         - name: Install Playwright Browsers
           run:  | 
-            cd e2e
             npx playwright install --with-deps
 
         - name: Run app server
           run: | 
-            npm run start &
+            npm run start
 
         - name: Wait for server to be ready
           run: |
-            cd e2e
             npx wait-on http://localhost:4200
 
         - name: Run Playwright tests
           run: | 
-            cd e2e
-            npx playwright test
+            npm run test-headless
 
         - uses: actions/upload-artifact@v4
           if: ${{ !cancelled() }}
