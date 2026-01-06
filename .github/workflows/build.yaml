@@ -49,6 +49,8 @@ jobs:
           if: ${{ !cancelled() }}
           with:
             name: playwright-report
+            path: playwright-report/
+            retention-days: 30
 
     build:
         runs-on: ubuntu-latest
