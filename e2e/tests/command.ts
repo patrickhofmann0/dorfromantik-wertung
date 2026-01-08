@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Page } from '@playwright/test';
 
 // utility method for click on button with given name
 export async function clickButtonByLabel(page: Page, label: string) {
@@ -15,17 +15,16 @@ export async function fillNumberboxByLabel(page: Page, label: string, number: st
   await page.getByRole('spinbutton', { name: label }).fill(number.toString());
 }
 
-
 // kampagne erstellen
-export async function createKampagne(page: Page, 
-  name: string, 
-  spielleiter: string, 
-  anzahlSpieler: string | number) {
-  await clickButtonByLabel(page, 'Neue Kampagne anlegen');    
+export async function createKampagne(
+  page: Page,
+  name: string,
+  spielleiter: string,
+  anzahlSpieler: string | number,
+) {
+  await clickButtonByLabel(page, 'Neue Kampagne anlegen');
   await fillTextboxByLabel(page, 'Name der Kampagne', name);
   await fillTextboxByLabel(page, 'Spielleiter', spielleiter);
   await fillNumberboxByLabel(page, 'Anzahl der Spieler', anzahlSpieler);
   await clickButtonByLabel(page, 'Kampagne erstellen');
-
-
 }

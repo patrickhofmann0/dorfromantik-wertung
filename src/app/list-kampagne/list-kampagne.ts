@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { KampagneService } from '../kampagne-service';
 import { Kampagne } from '../model/kampagne';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -7,23 +7,15 @@ import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-list-kampagne',
-  imports: [MatExpansionModule,
-    MatButtonModule,
-    RouterModule
-  ],
+  imports: [MatExpansionModule, MatButtonModule, RouterModule],
   templateUrl: './list-kampagne.html',
   styleUrl: './list-kampagne.scss',
 })
 export class ListKampagne implements OnInit {
+  private router = inject(Router);
+  private kampagneService = inject(KampagneService);
 
   kampagnenList!: Kampagne[];
-
-  constructor(
-    private router: Router,
-    private kampagneService: KampagneService
-  ) {
-
-  }
   ngOnInit(): void {
     this.loadKampagnen();
   }
@@ -31,7 +23,7 @@ export class ListKampagne implements OnInit {
   deleteKampagne(id: string) {
     this.kampagneService.deleteKampagne(id);
     this.loadKampagnen();
-  } 
+  }
 
   loadKampagnen() {
     this.kampagnenList = this.kampagneService.getKampagnen();
@@ -40,5 +32,4 @@ export class ListKampagne implements OnInit {
   navigateToDetails(id: string) {
     this.router.navigate(['/details', id]);
   }
-
 }

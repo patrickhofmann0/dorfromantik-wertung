@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Wertung } from '../model/wertung';
 import { KampagneService } from '../kampagne-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,21 +19,19 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatTabsModule
+    MatTabsModule,
   ],
   templateUrl: './create-wertung.html',
-  styleUrl: './create-wertung.scss'
+  styleUrl: './create-wertung.scss',
 })
 export class CreateWertung implements OnInit {
+  private kampagneService = inject(KampagneService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   @ViewChild('wertungForm') wertungForm!: NgForm;
   wertung: Wertung = new Wertung();
   kampagneId: string = '';
-
-  constructor(
-    private kampagneService: KampagneService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -55,7 +53,7 @@ export class CreateWertung implements OnInit {
       this.wertung.punkteLaengste = claculator.calculatLaengsteScore();
       this.wertung.punkteFahnen = claculator.calculatLaengsteScore();
       this.wertung.punkteFreigespielt = claculator.calculateFreigespieltScore();
-      
+
       this.kampagneService.addWertungToKampagne(this.kampagneId, this.wertung);
       this.router.navigate(['/details', this.kampagneId]);
     }

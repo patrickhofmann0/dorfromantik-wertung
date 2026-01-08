@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KampagneService } from '../kampagne-service';
 import { Kampagne } from '../model/kampagne';
@@ -14,16 +14,15 @@ import { Wertung } from '../model/wertung';
   styleUrl: './details-kampagne.scss',
 })
 export class DetailsKampagne implements OnInit {
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private kampagneService = inject(KampagneService);
 
   // get id from route and load kampagne details
   id!: string;
   kampagne!: Kampagne;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private kampagneService: KampagneService
-  ) {
+  constructor() {
     this.id = this.route.snapshot.paramMap.get('id') || '';
   }
 
@@ -37,13 +36,9 @@ export class DetailsKampagne implements OnInit {
     this.kampagne.wertungen.sort((a: Wertung, b: Wertung) => {
       return new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime();
     });
-
-
   }
 
   navigateToCreateWertung() {
     this.router.navigate(['/create-wertung', this.id]);
   }
-
-
 }

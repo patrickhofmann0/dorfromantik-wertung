@@ -6,29 +6,29 @@ import { DetailsKampagne } from './details-kampagne/details-kampagne';
 import { CreateWertung } from './create-wertung/create-wertung';
 
 export const routes: Routes = [
-    {
-        component: Startview,
-        path: '',
-        pathMatch: 'full'
-    },
-    { 
-        component: CreateKampagne, 
-        path: 'create',
-        pathMatch: 'full'
-    },
-    {
-        component: CreateWertung, 
-        path: 'create-wertung/:id', 
-        pathMatch: 'full'
-    },
-    {
-        component: ListKampagne,
-        path: 'list',
-        pathMatch: 'full'
-    },
-    {
-        component: DetailsKampagne,
-        path: 'details/:id',
-        pathMatch: 'full'
-    }
+  {
+    component: Startview,
+    path: '',
+    pathMatch: 'full',
+  },
+  {
+    component: CreateKampagne,
+    path: 'create',
+    pathMatch: 'full',
+  },
+  {
+    component: CreateWertung,
+    path: 'create-wertung/:id',
+    pathMatch: 'full',
+  },
+  {
+    component: ListKampagne,
+    path: 'list',
+    pathMatch: 'full',
+  },
+  {
+    component: DetailsKampagne,
+    path: 'details/:id',
+    pathMatch: 'full',
+  },
 ];

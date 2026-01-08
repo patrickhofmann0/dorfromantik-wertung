@@ -1,41 +1,51 @@
 @if (kampagne) {
-<div class="form-container">
-  <h1>{{ kampagne.name }}</h1>
+  <div class="form-container">
+    <h1>{{ kampagne.name }}</h1>
 
-  <button matButton="tonal" class="create-wertung" color="primary" 
-  (click)="navigateToCreateWertung()" >Neue Wertung</button>
+    <button
+      matButton="tonal"
+      class="create-wertung"
+      color="primary"
+      (click)="navigateToCreateWertung()"
+    >
+      Neue Wertung
+    </button>
 
-  <mat-accordion>
-    @for (wertung of kampagne.wertungen; track wertung.id) {
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ wertung.dateCreated  | date:'dd.MM.yyyy HH:mm' }}
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <table>
-        <tr>
-          <td>Punkte Auftrag:</td>
-          <td>{{ wertung.punkteAuftrag }}</td>
-        </tr>
-        <tr>
-          <td>Punkte längster Fluss und Schiene:</td>
-          <td>{{ wertung.punkteLaengste }}</td>
-        </tr>
-        <tr>
-          <td>Punkte für Fahnen:</td>
-          <td>{{ wertung.punkteFahnen }}</td>
-        </tr>
-        <tr>
-          <td>Punkte für Freigespielt:</td>
-          <td>{{ wertung.punkteFreigespielt }}</td>
-        <tr>
-          <td><b>Gesamtpunkte:</b></td>
-          <td><b>{{ wertung.gesamtPunkte }}</b></td>
-        </tr>
-      </table>
-    </mat-expansion-panel>
-    }
-  </mat-accordion>
-</div>
+    <mat-accordion>
+      @for (wertung of kampagne.wertungen; track wertung.id) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ wertung.dateCreated | date: 'dd.MM.yyyy HH:mm' }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <table>
+            <tr>
+              <td>Punkte Auftrag:</td>
+              <td>{{ wertung.punkteAuftrag }}</td>
+            </tr>
+            <tr>
+              <td>Punkte längster Fluss und Schiene:</td>
+              <td>{{ wertung.punkteLaengste }}</td>
+            </tr>
+            <tr>
+              <td>Punkte für Fahnen:</td>
+              <td>{{ wertung.punkteFahnen }}</td>
+            </tr>
+            <tr>
+              <td>Punkte für Freigespielt:</td>
+              <td>{{ wertung.punkteFreigespielt }}</td>
+            </tr>
+
+            <tr>
+              <td><b>Gesamtpunkte:</b></td>
+              <td>
+                <b>{{ wertung.gesamtPunkte }}</b>
+              </td>
+            </tr>
+          </table>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  </div>
 }

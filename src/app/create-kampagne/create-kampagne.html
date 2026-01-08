@@ -1,63 +1,55 @@
 <div class="form-container">
+  <h1>Kampagne anlegen</h1>
 
-<h1>Kampagne anlegen</h1>
+  <form (ngSubmit)="submitKampagneNew()" #kampagneForm="ngForm">
+    <mat-form-field class="form-field">
+      <mat-label>Name der Kampagne</mat-label>
+      <input matInput required [(ngModel)]="kampagne.name" name="name" #name="ngModel" />
+      @if (name.invalid && (name.dirty || name.touched)) {
+        @if (name.hasError('required')) {
+          <div class="alert">Name der Kampagne ist erforderlich.</div>
+        }
+      }
+    </mat-form-field>
 
-<form (ngSubmit)="submitKampagneNew()" #kampagneForm="ngForm">
-<mat-form-field class="form-field">
-  <mat-label>Name der Kampagne</mat-label>
-  <input matInput
-  required
-  [(ngModel)]="kampagne.name" 
-  name="name"
-  #name="ngModel">
-  @if (name.invalid && (name.dirty || name.touched)) {
-    @if (name.hasError('required')) {
-      <div class="alert">
-        Name der Kampagne ist erforderlich.
-      </div>
-    }
-  }
-</mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Spielleiter</mat-label>
+      <input
+        matInput
+        required
+        [(ngModel)]="kampagne.spielleiter"
+        name="spielleiter"
+        #spielleiter="ngModel"
+      />
+      @if (spielleiter.invalid && (spielleiter.dirty || spielleiter.touched)) {
+        @if (spielleiter.hasError('required')) {
+          <div class="alert">Name des Spielleiters ist erforderlich.</div>
+        }
+      }
+    </mat-form-field>
 
-<mat-form-field class="form-field">
-  <mat-label>Spielleiter</mat-label>
-  <input matInput 
-  required
-  [(ngModel)]="kampagne.spielleiter" 
-  name="spielleiter" 
-  #spielleiter="ngModel">
-    @if (spielleiter.invalid && (spielleiter.dirty || spielleiter.touched)) {
-       @if (spielleiter.hasError('required')) {
-      <div class="alert">
-        Name des Spielleiters ist erforderlich.
-      </div>
-    }
-  }
-</mat-form-field>
-
-<mat-form-field class="form-field">
-  <mat-label>Anzahl der Spieler</mat-label>
-  <input matInput 
-  required
-  type="number" min="1" max="8" step="1" 
-  [(ngModel)]="kampagne.anzahlSpieler" 
-  name="anzahlSpieler"
-  #anzahlSpieler="ngModel"
-  >
+    <mat-form-field class="form-field">
+      <mat-label>Anzahl der Spieler</mat-label>
+      <input
+        matInput
+        required
+        type="number"
+        min="1"
+        max="8"
+        step="1"
+        [(ngModel)]="kampagne.anzahlSpieler"
+        name="anzahlSpieler"
+        #anzahlSpieler="ngModel"
+      />
       @if (anzahlSpieler.invalid && (anzahlSpieler.dirty || anzahlSpieler.touched)) {
-       @if (anzahlSpieler.hasError('required')) {
-      <div class="alert">
-        Die Anzahl der Spieler ist erforderlich.
-      </div>
-    }
-  }
-</mat-form-field>
+        @if (anzahlSpieler.hasError('required')) {
+          <div class="alert">Die Anzahl der Spieler ist erforderlich.</div>
+        }
+      }
+    </mat-form-field>
 
-<button matButton="tonal"
-    class="form-field"
-    color="primary"
-    type="submit">
-    Kampagne erstellen
-</button>
-</form>
+    <button matButton="tonal" class="form-field" color="primary" type="submit">
+      Kampagne erstellen
+    </button>
+  </form>
 </div>

@@ -17,7 +17,7 @@ describe('DetailsKampagne', () => {
     spielleiter: 'Test Leiter',
     anzahlSpieler: 4,
     wertungen: [],
-    startDate: new Date()
+    startDate: new Date(),
   };
 
   beforeEach(async () => {
@@ -38,8 +38,8 @@ describe('DetailsKampagne', () => {
           provide: KampagneService,
           useValue: {
             getKampagneById: vi.fn(() => mockKampagne),
-          }
-        }
+          },
+        },
       ],
     }).compileComponents();
 
