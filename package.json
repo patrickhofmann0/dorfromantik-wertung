@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "github-build": "ng build --base-href 'https://patrickhofmann0.github.io/dorfromantik-wertung/'",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
