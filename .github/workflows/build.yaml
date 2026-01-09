@@ -97,8 +97,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          # location of the coverage artifacts
-          path: "./dist/browser"
+          path: "./dist/dorfromantik-wertung/browser"
 
   deploy-app:
     name: Deploy to GitHub Pages
