@@ -93,14 +93,12 @@ jobs:
       - name: Build app
         run: |
           npm run github-build
-          cp dist/index.html dist/404.html
-
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v4
         with:
           # location of the coverage artifacts
-          path: "./dist"
+          path: "./dist/browser"
 
   deploy-app:
     name: Deploy to GitHub Pages
