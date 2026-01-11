@@ -14,7 +14,7 @@ test('new wertung only allgemein should be created and visible in kampagne detai
   page,
 }) => {
   await createKampagne(page, 'Kampagne-Test', 'leiter', 4);
-  await clickButtonByLabel(page, 'Kampagne-Test');
+  await page.locator('summary').click();
   await clickButtonByLabel(page, 'Zur Kampagne');
   await clickButtonByLabel(page, 'Neue Wertung');
   await fillNumberboxByLabel(page, 'Punkte Auftrag Feld', 50);
@@ -35,5 +35,6 @@ test('new wertung only allgemein should be created and visible in kampagne detai
   const month = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   const year = today.getFullYear();
   const dateString = `${day}.${month}.${year}`;
-  await expect(page.locator('mat-panel-title')).toContainText(dateString);
+
+  await expect(page.locator('summary')).toContainText(dateString);
 });
