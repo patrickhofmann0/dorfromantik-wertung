@@ -1,24 +1,13 @@
 @if (kampagne) {
-  <div class="form-container">
+  <div class="container">
     <h1>{{ kampagne.name }}</h1>
 
-    <button
-      matButton="tonal"
-      class="create-wertung"
-      color="primary"
-      (click)="navigateToCreateWertung()"
-    >
-      Neue Wertung
-    </button>
+    <button class="btn-primary" (click)="navigateToCreateWertung()">Neue Wertung</button>
 
-    <mat-accordion>
-      @for (wertung of kampagne.wertungen; track wertung.id) {
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{ wertung.dateCreated | date: 'dd.MM.yyyy HH:mm' }}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
+    @for (wertung of kampagne.wertungen; track wertung.id) {
+      <details class="accordion">
+        <summary>{{ wertung.dateCreated | date: 'dd.MM.yyyy HH:mm' }}</summary>
+        <div class="accordion-body">
           <table>
             <tr>
               <td>Punkte Auftrag:</td>
@@ -44,8 +33,9 @@
               </td>
             </tr>
           </table>
-        </mat-expansion-panel>
-      }
-    </mat-accordion>
+        </div>
+      </details>
+    }
   </div>
 }
+

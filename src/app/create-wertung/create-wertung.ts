@@ -2,25 +2,14 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Wertung } from '../model/wertung';
 import { KampagneService } from '../kampagne-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { FormsModule, NgForm } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { WertungCalculator } from '../model/wertungCalculator';
-import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-create-wertung',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatTabsModule,
-  ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './create-wertung.html',
   styleUrl: './create-wertung.scss',
 })

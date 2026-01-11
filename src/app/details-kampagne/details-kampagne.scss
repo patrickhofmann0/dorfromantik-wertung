@@ -1,6 +1,18 @@
-.create-wertung {
+.container {
+  padding: 1rem;
+}
+
+.btn-primary {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 1.5rem;
+}
+
+.accordion {
+  margin-bottom: 1rem;
+}
+
+.accordion-body {
+  padding: 1rem;
 }
 
 table {
@@ -10,3 +22,4 @@ table {
     text-align: right;
   }
 }
+
