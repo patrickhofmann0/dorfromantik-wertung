@@ -2,6 +2,8 @@
 
 Diese Anwendung ist ein einfaches Werkzeug, um die Ergebnisse und Kampagnen des Brettspiels "Dorfromantik" zu verwalten. Es bietet eine funktionale, aber noch in Entwicklung befindliche, Benutzeroberfläche.
 
+[Zur Anwendung](https://patrickhofmann0.github.io/dorfromantik-wertung)
+
 ## Verwendete Technologien
 
 - [Angular](https://angular.io/)
