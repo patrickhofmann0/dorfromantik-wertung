@@ -8,7 +8,6 @@ permissions:
   id-token: write
 
 jobs:
-
   lint:
     runs-on: ubuntu-latest
     name: Run linting
@@ -97,13 +96,13 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: "./dist/dorfromantik-wertung/browser"
+          path: './dist/dorfromantik-wertung/browser'
 
   deploy-app:
     name: Deploy to GitHub Pages
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    needs: [unit-test, playwright-test, lint, build]    
+    needs: [unit-test, playwright-test, lint, build]
 
     environment:
       # environment created automatically by GitHub
@@ -114,4 +113,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-            

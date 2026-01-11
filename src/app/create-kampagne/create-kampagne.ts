@@ -1,10 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { Component, inject } from '@angular/core';
 import { Kampagne } from '../model/kampagne';
 import { FormsModule } from '@angular/forms';
-import { validate } from '@angular/forms/signals';
 import { KampagneService } from '../kampagne-service';
 import { Router } from '@angular/router';
 
@@ -13,7 +9,7 @@ import { Router } from '@angular/router';
  */
 @Component({
   selector: 'app-create-kampagne',
-  imports: [MatFormFieldModule, MatButtonModule, MatInputModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './create-kampagne.html',
   styleUrl: './create-kampagne.scss',
 })

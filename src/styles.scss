@@ -1,32 +1,7 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
-@use '@angular/material' as mat;
+@import 'papercss/dist/paper.min.css';
 
 html {
   height: 100%;
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$cyan-palette,
-        tertiary: mat.$orange-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
-
-  @include mat.tabs-overrides(
-    (
-      active-focus-indicator-color: white,
-      active-focus-label-text-color: white,
-      inactive-label-text-color: white,
-      inactive-hover-label-text-color: white,
-      active-label-text-color: white,
-    )
-  );
 }
 
 body {
@@ -40,8 +15,7 @@ body {
   // variables at https://material.angular.dev/guide/system-variables
   //dark green background
   background-color: #2e4d2b;
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+  color: white;
 
   // Reset the user agent margin.
   margin: 0;
@@ -57,4 +31,15 @@ h1 {
 
 .form-container {
   margin: 12px;
+}
+
+input[type='number'] {
+  text-align: center;
+}
+
+input[type='text'],
+input[type='number'] {
+  border: 1px solid white !important;
+  width: 100%;
+  color: white !important;
 }

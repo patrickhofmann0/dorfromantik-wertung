@@ -1,13 +1,30 @@
-.create-kampagne {
+.container {
+  padding: 1rem;
+}
+
+.btn-primary {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 1.5rem;
+}
+
+.accordion {
+  margin-bottom: 1rem;
+}
+
+.accordion-body {
+  padding: 1rem;
 }
 
 table {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 1rem;
 
   td:nth-child(2) {
     text-align: right;
   }
+}
+
+.btn-group {
+  display: flex;
+  gap: 1rem;
 }

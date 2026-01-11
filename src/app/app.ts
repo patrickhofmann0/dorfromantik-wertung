@@ -1,7 +1,5 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Startview } from './startview/startview';
-import { MatToolbarModule } from '@angular/material/toolbar';
 
 /**
  * The main application component.

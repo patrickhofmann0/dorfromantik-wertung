@@ -2,14 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KampagneService } from '../kampagne-service';
 import { Kampagne } from '../model/kampagne';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
 import { Wertung } from '../model/wertung';
 
 @Component({
   selector: 'app-details-kampagne',
-  imports: [MatExpansionModule, MatButtonModule, DatePipe],
+  imports: [DatePipe],
   templateUrl: './details-kampagne.html',
   styleUrl: './details-kampagne.scss',
 })

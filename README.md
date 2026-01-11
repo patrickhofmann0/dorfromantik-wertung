@@ -30,6 +30,7 @@ Führe `npm run build` aus, um das Projekt zu kompilieren. Die Artefakte werden 
 ## Unit tests
 
 Zur Ausführung der Unit-tests:
+
 ```bash
 npm run test
 ```
@@ -37,11 +38,13 @@ npm run test
 ## Linting und Formatter
 
 Zur Überprüfung von linting-Fehlern
+
 ```bash
 npm run lint
 ```
 
-Zum Formatieren 
+Zum Formatieren
+
 ```bash
 npm run format
 ```

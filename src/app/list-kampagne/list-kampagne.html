@@ -1,19 +1,12 @@
-<div class="form-container">
-  <h1>Liste der Kampagnen</h1>
+<div class="container">
+  <h1>Meine Kampagnen</h1>
 
-  <button matButton="tonal" class="create-kampagne" routerLink="/create" type="button">
-    Kampagne erstellen
-  </button>
+  <button class="btn-primary" routerLink="/create" type="button">Kampagne erstellen</button>
 
-  <mat-accordion>
-    @for (kampagne of kampagnenList; track kampagne.id) {
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ kampagne.name }}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-
+  @for (kampagne of kampagnenList; track kampagne.id) {
+    <details class="accordion">
+      <summary>{{ kampagne.name }}</summary>
+      <div class="accordion-body">
         <table>
           <tr>
             <td>Spielleiter</td>
@@ -24,26 +17,15 @@
             <td>{{ kampagne.anzahlSpieler }}</td>
           </tr>
         </table>
-        <span>
-          <button
-            matButton="tonal"
-            color="primary"
-            type="button"
-            style="margin-right: 12px; margin-bottom: 12px"
-            (click)="navigateToDetails(kampagne.id)"
-          >
+        <div class="btn-group">
+          <button class="btn-primary" type="button" (click)="navigateToDetails(kampagne.id)">
             Zur Kampagne
           </button>
-          <button
-            matButton="tonal"
-            color="warn"
-            type="button"
-            (click)="deleteKampagne(kampagne.id)"
-          >
+          <button class="btn-danger" type="button" (click)="deleteKampagne(kampagne.id)">
             Kampagne löschen
           </button>
-        </span>
-      </mat-expansion-panel>
-    }
-  </mat-accordion>
+        </div>
+      </div>
+    </details>
+  }
 </div>

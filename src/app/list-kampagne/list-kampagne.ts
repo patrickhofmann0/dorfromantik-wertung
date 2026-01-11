@@ -1,13 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { KampagneService } from '../kampagne-service';
 import { Kampagne } from '../model/kampagne';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-list-kampagne',
-  imports: [MatExpansionModule, MatButtonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './list-kampagne.html',
   styleUrl: './list-kampagne.scss',
 })

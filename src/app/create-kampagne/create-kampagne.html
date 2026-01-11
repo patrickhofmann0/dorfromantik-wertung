@@ -1,21 +1,29 @@
-<div class="form-container">
+<div class="container">
   <h1>Kampagne anlegen</h1>
 
   <form (ngSubmit)="submitKampagneNew()" #kampagneForm="ngForm">
-    <mat-form-field class="form-field">
-      <mat-label>Name der Kampagne</mat-label>
-      <input matInput required [(ngModel)]="kampagne.name" name="name" #name="ngModel" />
+    <div class="form-group">
+      <label for="name">Name der Kampagne</label>
+      <input
+        type="text"
+        id="name"
+        required
+        [(ngModel)]="kampagne.name"
+        name="name"
+        #name="ngModel"
+      />
       @if (name.invalid && (name.dirty || name.touched)) {
         @if (name.hasError('required')) {
-          <div class="alert">Name der Kampagne ist erforderlich.</div>
+          <p class="text-danger">Name der Kampagne ist erforderlich.</p>
         }
       }
-    </mat-form-field>
+    </div>
 
-    <mat-form-field class="form-field">
-      <mat-label>Spielleiter</mat-label>
+    <div class="form-group">
+      <label for="spielleiter">Spielleiter</label>
       <input
-        matInput
+        type="text"
+        id="spielleiter"
         required
         [(ngModel)]="kampagne.spielleiter"
         name="spielleiter"
@@ -23,17 +31,17 @@
       />
       @if (spielleiter.invalid && (spielleiter.dirty || spielleiter.touched)) {
         @if (spielleiter.hasError('required')) {
-          <div class="alert">Name des Spielleiters ist erforderlich.</div>
+          <p class="text-danger">Name des Spielleiters ist erforderlich.</p>
         }
       }
-    </mat-form-field>
+    </div>
 
-    <mat-form-field class="form-field">
-      <mat-label>Anzahl der Spieler</mat-label>
+    <div class="form-group">
+      <label for="anzahlSpieler">Anzahl der Spieler</label>
       <input
-        matInput
-        required
         type="number"
+        id="anzahlSpieler"
+        required
         min="1"
         max="8"
         step="1"
@@ -43,13 +51,11 @@
       />
       @if (anzahlSpieler.invalid && (anzahlSpieler.dirty || anzahlSpieler.touched)) {
         @if (anzahlSpieler.hasError('required')) {
-          <div class="alert">Die Anzahl der Spieler ist erforderlich.</div>
+          <p class="text-danger">Die Anzahl der Spieler ist erforderlich.</p>
         }
       }
-    </mat-form-field>
+    </div>
 
-    <button matButton="tonal" class="form-field" color="primary" type="submit">
-      Kampagne erstellen
-    </button>
+    <button class="btn-primary" type="submit">Kampagne erstellen</button>
   </form>
 </div>

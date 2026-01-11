@@ -8,8 +8,8 @@ test.beforeEach(async ({ page }) => {
 test('kampagne erstellen soll sichtbar in der kampagnenliste sein', async ({ page }) => {
   await createKampagne(page, 'test', 'tesr', 13);
 
-  await expect(page.locator('mat-panel-title')).toContainText('test');
-  await page.getByRole('button', { name: 'test' }).click();
+  await expect(page.locator('summary')).toContainText('test');
+  await page.locator('summary').click();
   await expect(page.getByRole('table')).toContainText('Spielleiter');
   await expect(page.getByRole('table')).toContainText('Anzahl der Spieler');
   await expect(page.getByRole('table')).toContainText('tesr');

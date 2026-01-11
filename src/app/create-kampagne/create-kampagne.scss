@@ -1,3 +1,15 @@
-.form-field {
+.container {
+  padding: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.btn-primary {
   width: 100%;
+}
+
+.text-danger {
+  color: var(--danger);
 }
