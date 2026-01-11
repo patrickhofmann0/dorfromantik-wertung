@@ -33,6 +33,10 @@ h1 {
   margin: 12px;
 }
 
+input[type='number'] {
+  text-align: center;
+}
+
 input[type='text'],
 input[type='number'] {
   border: 1px solid white !important;
