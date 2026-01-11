@@ -2,27 +2,38 @@
   padding: 1rem;
 }
 
+.tabs {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .tabs > input[type='radio'] {
-  display: none;
-}
-
-.tabs > .tab-content {
-  display: none;
-  padding: 1rem 0;
-}
-
-.tabs > input[type='radio']:checked + label + .tab-content {
-  display: block;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .tabs > label {
+  color: white;
   cursor: pointer;
   padding: 0.5rem 1rem;
   border-bottom: 2px solid transparent;
+  order: 1;
+}
+
+.tabs > .tab-content {
+  order: 99;
+  width: 100%;
+  display: none;
 }
 
 .tabs > input[type='radio']:checked + label {
   border-bottom-color: var(--primary);
+}
+
+.tabs > input[type='radio']:checked + label + .tab-content {
+  display: block;
 }
 
 fieldset {
