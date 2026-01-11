@@ -1,34 +1,44 @@
 <div class="container">
   <h3>Wertung erstellen</h3>
 
-  <form (ngSubmit)="submitWertungNew()" #wertungForm="ngForm" >
-
+  <form (ngSubmit)="submitWertungNew()" #wertungForm="ngForm">
     <fieldset class="border border-5 border-white">
       <legend>Aufträge</legend>
       <div class="row">
         <div class="col-6">
           <div class="form-group">
             <label for="punkteAuftragFeld">Punkte Auftrag Feld</label>
-            <input id="punkteAuftragFeld" type="number" [(ngModel)]="wertung.punkteAuftragFeld" name="punkteAuftragFeld"
-              #punkteAuftragFeld="ngModel" required min="0" />
+            <input
+              id="punkteAuftragFeld"
+              type="number"
+              [(ngModel)]="wertung.punkteAuftragFeld"
+              name="punkteAuftragFeld"
+              #punkteAuftragFeld="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteAuftragFeld.invalid &&
-            (punkteAuftragFeld.dirty || punkteAuftragFeld.touched)
+              punkteAuftragFeld.invalid && (punkteAuftragFeld.dirty || punkteAuftragFeld.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Auftrag Feld sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Auftrag Feld sind erforderlich.</div>
             }
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Auftrag Wald</label>
-            <input type="number" [(ngModel)]="wertung.punkteAuftragWald" name="punkteAuftragWald"
-              #punkteAuftragWald="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteAuftragWald"
+              name="punkteAuftragWald"
+              #punkteAuftragWald="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteAuftragWald.invalid &&
-            (punkteAuftragWald.dirty || punkteAuftragWald.touched)
+              punkteAuftragWald.invalid && (punkteAuftragWald.dirty || punkteAuftragWald.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Auftrag Wald sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Auftrag Wald sind erforderlich.</div>
             }
           </div>
         </div>
@@ -37,26 +47,36 @@
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Auftrag Dorf</label>
-            <input type="number" [(ngModel)]="wertung.punkteAuftragDorf" name="punkteAuftragDorf"
-              #punkteAuftragDorf="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteAuftragDorf"
+              name="punkteAuftragDorf"
+              #punkteAuftragDorf="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteAuftragDorf.invalid &&
-            (punkteAuftragDorf.dirty || punkteAuftragDorf.touched)
+              punkteAuftragDorf.invalid && (punkteAuftragDorf.dirty || punkteAuftragDorf.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Auftrag Dorf sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Auftrag Dorf sind erforderlich.</div>
             }
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Auftrag Fluss</label>
-            <input type="number" [(ngModel)]="wertung.punkteAufragFluss" name="punkteAufragFluss"
-              #punkteAufragFluss="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteAufragFluss"
+              name="punkteAufragFluss"
+              #punkteAufragFluss="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteAufragFluss.invalid &&
-            (punkteAufragFluss.dirty || punkteAufragFluss.touched)
+              punkteAufragFluss.invalid && (punkteAufragFluss.dirty || punkteAufragFluss.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Auftrag Fluss sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Auftrag Fluss sind erforderlich.</div>
             }
           </div>
         </div>
@@ -65,15 +85,19 @@
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Auftrag Schiene</label>
-            <input type="number" [(ngModel)]="wertung.punkteAuftragSchiene" name="punkteAuftragSchiene"
-              #punkteAuftragSchiene="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteAuftragSchiene"
+              name="punkteAuftragSchiene"
+              #punkteAuftragSchiene="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteAuftragSchiene.invalid &&
-            (punkteAuftragSchiene.dirty || punkteAuftragSchiene.touched)
+              punkteAuftragSchiene.invalid &&
+              (punkteAuftragSchiene.dirty || punkteAuftragSchiene.touched)
             ) {
-            <div class="alert alert-danger">
-              Punkte für Auftrag Schiene sind erforderlich.
-            </div>
+              <div class="alert alert-danger">Punkte für Auftrag Schiene sind erforderlich.</div>
             }
           </div>
         </div>
@@ -86,30 +110,40 @@
         <div class="col-6">
           <div class="form-group">
             <label>Punkte längste Schiene</label>
-            <input type="number" [(ngModel)]="wertung.punkteLaengsteSchiene" name="punkteLaengsteSchiene"
-              #punkteLaengsteSchiene="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteLaengsteSchiene"
+              name="punkteLaengsteSchiene"
+              #punkteLaengsteSchiene="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteLaengsteSchiene.invalid &&
-            (punkteLaengsteSchiene.dirty || punkteLaengsteSchiene.touched)
+              punkteLaengsteSchiene.invalid &&
+              (punkteLaengsteSchiene.dirty || punkteLaengsteSchiene.touched)
             ) {
-            <div class="alert alert-danger">
-              Punkte für die längste Schiene sind erforderlich.
-            </div>
+              <div class="alert alert-danger">
+                Punkte für die längste Schiene sind erforderlich.
+              </div>
             }
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label>Punkte längster Fluss</label>
-            <input type="number" [(ngModel)]="wertung.punkteLaengsteFluss" name="punkteLaengsteFluss"
-              #punkteLaengsteFluss="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteLaengsteFluss"
+              name="punkteLaengsteFluss"
+              #punkteLaengsteFluss="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteLaengsteFluss.invalid &&
-            (punkteLaengsteFluss.dirty || punkteLaengsteFluss.touched)
+              punkteLaengsteFluss.invalid &&
+              (punkteLaengsteFluss.dirty || punkteLaengsteFluss.touched)
             ) {
-            <div class="alert alert-danger">
-              Punkte für den längsten Fluss sind erforderlich.
-            </div>
+              <div class="alert alert-danger">Punkte für den längsten Fluss sind erforderlich.</div>
             }
           </div>
         </div>
@@ -122,77 +156,107 @@
         <div class="col-12">
           <div class="form-group">
             <label>Punkte abgeschlossene Fahnen Wald</label>
-            <input type="number" [(ngModel)]="wertung.punkteAbgeschlosseneFahnenWald"
-              name="punkteAbgeschlosseneFahnenWald" #punkteAbgeschlosseneFahnenWald="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteAbgeschlosseneFahnenWald"
+              name="punkteAbgeschlosseneFahnenWald"
+              #punkteAbgeschlosseneFahnenWald="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteAbgeschlosseneFahnenWald.invalid &&
-            (punkteAbgeschlosseneFahnenWald.dirty || punkteAbgeschlosseneFahnenWald.touched)
+              punkteAbgeschlosseneFahnenWald.invalid &&
+              (punkteAbgeschlosseneFahnenWald.dirty || punkteAbgeschlosseneFahnenWald.touched)
             ) {
-            <div class="alert alert-danger">
-              Punkte für abgeschlossene Fahnen (Wald) sind erforderlich.
-            </div>
+              <div class="alert alert-danger">
+                Punkte für abgeschlossene Fahnen (Wald) sind erforderlich.
+              </div>
             }
           </div>
         </div>
         <div class="col-12">
           <div class="form-group">
             <label>Punkte abgeschlossene Fahnen Feld</label>
-            <input type="number" [(ngModel)]="wertung.punkteAbgeschlosseneFahnenFeld"
-              name="punkteAbgeschlosseneFahnenFeld" #punkteAbgeschlosseneFahnenFeld="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteAbgeschlosseneFahnenFeld"
+              name="punkteAbgeschlosseneFahnenFeld"
+              #punkteAbgeschlosseneFahnenFeld="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteAbgeschlosseneFahnenFeld.invalid &&
-            (punkteAbgeschlosseneFahnenFeld.dirty || punkteAbgeschlosseneFahnenFeld.touched)
+              punkteAbgeschlosseneFahnenFeld.invalid &&
+              (punkteAbgeschlosseneFahnenFeld.dirty || punkteAbgeschlosseneFahnenFeld.touched)
             ) {
-            <div class="alert alert-danger">
-              Punkte für abgeschlossene Fahnen (Feld) sind erforderlich.
-            </div>
+              <div class="alert alert-danger">
+                Punkte für abgeschlossene Fahnen (Feld) sind erforderlich.
+              </div>
             }
           </div>
         </div>
         <div class="col-12">
           <div class="form-group">
             <label>Punkte abgeschlossene Fahnen Dorf</label>
-            <input type="number" [(ngModel)]="wertung.punkteAbgeschlosseneFahnenDorf"
-              name="punkteAbgeschlosseneFahnenDorf" #punkteAbgeschlosseneFahnenDorf="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteAbgeschlosseneFahnenDorf"
+              name="punkteAbgeschlosseneFahnenDorf"
+              #punkteAbgeschlosseneFahnenDorf="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteAbgeschlosseneFahnenDorf.invalid &&
-            (punkteAbgeschlosseneFahnenDorf.dirty || punkteAbgeschlosseneFahnenDorf.touched)
+              punkteAbgeschlosseneFahnenDorf.invalid &&
+              (punkteAbgeschlosseneFahnenDorf.dirty || punkteAbgeschlosseneFahnenDorf.touched)
             ) {
-            <div class="alert alert-danger">
-              Punkte für abgeschlossene Fahnen (Dorf) sind erforderlich.
-            </div>
+              <div class="alert alert-danger">
+                Punkte für abgeschlossene Fahnen (Dorf) sind erforderlich.
+              </div>
             }
           </div>
         </div>
       </div>
     </fieldset>
-    
+
     <fieldset class="border border-5 border-white">
       <legend>Freigespielte Elemente</legend>
       <div class="row">
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Herzen</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltHerzen" name="punkteFreigespieltHerzen"
-              #punkteFreigespieltHerzen="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltHerzen"
+              name="punkteFreigespieltHerzen"
+              #punkteFreigespieltHerzen="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltHerzen.invalid &&
-            (punkteFreigespieltHerzen.dirty || punkteFreigespieltHerzen.touched)
+              punkteFreigespieltHerzen.invalid &&
+              (punkteFreigespieltHerzen.dirty || punkteFreigespieltHerzen.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Herzen sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Herzen sind erforderlich.</div>
             }
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Zirkus</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltZirkus" name="punkteFreigespieltZirkus"
-              #punkteFreigespieltZirkus="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltZirkus"
+              name="punkteFreigespieltZirkus"
+              #punkteFreigespieltZirkus="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltZirkus.invalid &&
-            (punkteFreigespieltZirkus.dirty || punkteFreigespieltZirkus.touched)
+              punkteFreigespieltZirkus.invalid &&
+              (punkteFreigespieltZirkus.dirty || punkteFreigespieltZirkus.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Zirkus sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Zirkus sind erforderlich.</div>
             }
           </div>
         </div>
@@ -201,26 +265,38 @@
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Bahnwärter</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltBahnwaerter"
-              name="punkteFreigespieltBahnwaerter" #punkteFreigespieltBahnwaerter="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltBahnwaerter"
+              name="punkteFreigespieltBahnwaerter"
+              #punkteFreigespieltBahnwaerter="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltBahnwaerter.invalid &&
-            (punkteFreigespieltBahnwaerter.dirty || punkteFreigespieltBahnwaerter.touched)
+              punkteFreigespieltBahnwaerter.invalid &&
+              (punkteFreigespieltBahnwaerter.dirty || punkteFreigespieltBahnwaerter.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Bahnwärter sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Bahnwärter sind erforderlich.</div>
             }
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Schäferin</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltSchaeferin" name="punkteFreigespieltSchaeferin"
-              #punkteFreigespieltSchaeferin="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltSchaeferin"
+              name="punkteFreigespieltSchaeferin"
+              #punkteFreigespieltSchaeferin="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltSchaeferin.invalid &&
-            (punkteFreigespieltSchaeferin.dirty || punkteFreigespieltSchaeferin.touched)
+              punkteFreigespieltSchaeferin.invalid &&
+              (punkteFreigespieltSchaeferin.dirty || punkteFreigespieltSchaeferin.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Schäferin sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Schäferin sind erforderlich.</div>
             }
           </div>
         </div>
@@ -229,26 +305,38 @@
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Hügel</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltHuegel" name="punkteFreigespieltHuegel"
-              #punkteFreigespieltHuegel="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltHuegel"
+              name="punkteFreigespieltHuegel"
+              #punkteFreigespieltHuegel="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltHuegel.invalid &&
-            (punkteFreigespieltHuegel.dirty || punkteFreigespieltHuegel.touched)
+              punkteFreigespieltHuegel.invalid &&
+              (punkteFreigespieltHuegel.dirty || punkteFreigespieltHuegel.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Hügel sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Hügel sind erforderlich.</div>
             }
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Baustelle</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltBaustelle" name="punkteFreigespieltBaustelle"
-              #punkteFreigespieltBaustelle="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltBaustelle"
+              name="punkteFreigespieltBaustelle"
+              #punkteFreigespieltBaustelle="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltBaustelle.invalid &&
-            (punkteFreigespieltBaustelle.dirty || punkteFreigespieltBaustelle.touched)
+              punkteFreigespieltBaustelle.invalid &&
+              (punkteFreigespieltBaustelle.dirty || punkteFreigespieltBaustelle.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Baustelle sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Baustelle sind erforderlich.</div>
             }
           </div>
         </div>
@@ -257,30 +345,39 @@
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Ballon Startplatz</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltBallonStartplatz"
-              name="punkteFreigespieltBallonStartplatz" #punkteFreigespieltBallonStartplatz="ngModel" required
-              min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltBallonStartplatz"
+              name="punkteFreigespieltBallonStartplatz"
+              #punkteFreigespieltBallonStartplatz="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltBallonStartplatz.invalid &&
-            (punkteFreigespieltBallonStartplatz.dirty ||
-            punkteFreigespieltBallonStartplatz.touched)
+              punkteFreigespieltBallonStartplatz.invalid &&
+              (punkteFreigespieltBallonStartplatz.dirty ||
+                punkteFreigespieltBallonStartplatz.touched)
             ) {
-            <div class="alert alert-danger">
-              Punkte für Ballon Startplatz sind erforderlich.
-            </div>
+              <div class="alert alert-danger">Punkte für Ballon Startplatz sind erforderlich.</div>
             }
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Goldenes Herz</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltGoldenesHerz"
-              name="punkteFreigespieltGoldenesHerz" #punkteFreigespieltGoldenesHerz="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltGoldenesHerz"
+              name="punkteFreigespieltGoldenesHerz"
+              #punkteFreigespieltGoldenesHerz="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltGoldenesHerz.invalid &&
-            (punkteFreigespieltGoldenesHerz.dirty || punkteFreigespieltGoldenesHerz.touched)
+              punkteFreigespieltGoldenesHerz.invalid &&
+              (punkteFreigespieltGoldenesHerz.dirty || punkteFreigespieltGoldenesHerz.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Goldenes Herz sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Goldenes Herz sind erforderlich.</div>
             }
           </div>
         </div>
@@ -289,26 +386,38 @@
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Waldhütte</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltWaldhuette" name="punkteFreigespieltWaldhuette"
-              #punkteFreigespieltWaldhuette="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltWaldhuette"
+              name="punkteFreigespieltWaldhuette"
+              #punkteFreigespieltWaldhuette="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltWaldhuette.invalid &&
-            (punkteFreigespieltWaldhuette.dirty || punkteFreigespieltWaldhuette.touched)
+              punkteFreigespieltWaldhuette.invalid &&
+              (punkteFreigespieltWaldhuette.dirty || punkteFreigespieltWaldhuette.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Waldhütte sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Waldhütte sind erforderlich.</div>
             }
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Erntefest</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltErntefest" name="punkteFreigespieltErntefest"
-              #punkteFreigespieltErntefest="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltErntefest"
+              name="punkteFreigespieltErntefest"
+              #punkteFreigespieltErntefest="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltErntefest.invalid &&
-            (punkteFreigespieltErntefest.dirty || punkteFreigespieltErntefest.touched)
+              punkteFreigespieltErntefest.invalid &&
+              (punkteFreigespieltErntefest.dirty || punkteFreigespieltErntefest.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Erntefest sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Erntefest sind erforderlich.</div>
             }
           </div>
         </div>
@@ -317,26 +426,38 @@
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Wachturm</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltWachturm" name="punkteFreigespieltWachturm"
-              #punkteFreigespieltWachturm="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltWachturm"
+              name="punkteFreigespieltWachturm"
+              #punkteFreigespieltWachturm="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltWachturm.invalid &&
-            (punkteFreigespieltWachturm.dirty || punkteFreigespieltWachturm.touched)
+              punkteFreigespieltWachturm.invalid &&
+              (punkteFreigespieltWachturm.dirty || punkteFreigespieltWachturm.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Wachturm sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Wachturm sind erforderlich.</div>
             }
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Lokomotive</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltLokomotive" name="punkteFreigespieltLokomotive"
-              #punkteFreigespieltLokomotive="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltLokomotive"
+              name="punkteFreigespieltLokomotive"
+              #punkteFreigespieltLokomotive="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltLokomotive.invalid &&
-            (punkteFreigespieltLokomotive.dirty || punkteFreigespieltLokomotive.touched)
+              punkteFreigespieltLokomotive.invalid &&
+              (punkteFreigespieltLokomotive.dirty || punkteFreigespieltLokomotive.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Lokomotive sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Lokomotive sind erforderlich.</div>
             }
           </div>
         </div>
@@ -345,26 +466,38 @@
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Schiff</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltSchiff" name="punkteFreigespieltSchiff"
-              #punkteFreigespieltSchiff="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltSchiff"
+              name="punkteFreigespieltSchiff"
+              #punkteFreigespieltSchiff="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltSchiff.invalid &&
-            (punkteFreigespieltSchiff.dirty || punkteFreigespieltSchiff.touched)
+              punkteFreigespieltSchiff.invalid &&
+              (punkteFreigespieltSchiff.dirty || punkteFreigespieltSchiff.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Schiff sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Schiff sind erforderlich.</div>
             }
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Bahnhof</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltBahnhof" name="punkteFreigespieltBahnhof"
-              #punkteFreigespieltBahnhof="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltBahnhof"
+              name="punkteFreigespieltBahnhof"
+              #punkteFreigespieltBahnhof="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltBahnhof.invalid &&
-            (punkteFreigespieltBahnhof.dirty || punkteFreigespieltBahnhof.touched)
+              punkteFreigespieltBahnhof.invalid &&
+              (punkteFreigespieltBahnhof.dirty || punkteFreigespieltBahnhof.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Bahnhof sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Bahnhof sind erforderlich.</div>
             }
           </div>
         </div>
@@ -373,19 +506,24 @@
         <div class="col-6">
           <div class="form-group">
             <label>Punkte Hafen</label>
-            <input type="number" [(ngModel)]="wertung.punkteFreigespieltHafen" name="punkteFreigespieltHafen"
-              #punkteFreigespieltHafen="ngModel" required min="0" />
+            <input
+              type="number"
+              [(ngModel)]="wertung.punkteFreigespieltHafen"
+              name="punkteFreigespieltHafen"
+              #punkteFreigespieltHafen="ngModel"
+              required
+              min="0"
+            />
             @if (
-            punkteFreigespieltHafen.invalid &&
-            (punkteFreigespieltHafen.dirty || punkteFreigespieltHafen.touched)
+              punkteFreigespieltHafen.invalid &&
+              (punkteFreigespieltHafen.dirty || punkteFreigespieltHafen.touched)
             ) {
-            <div class="alert alert-danger">Punkte für Hafen sind erforderlich.</div>
+              <div class="alert alert-danger">Punkte für Hafen sind erforderlich.</div>
             }
           </div>
         </div>
       </div>
     </fieldset>
-
 
     <button class="btn-primary" type="submit">Wertung speichern</button>
   </form>
