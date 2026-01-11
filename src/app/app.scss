@@ -1,0 +1,15 @@
+main {
+  padding-top: 1rem;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+  gap: 1em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: var(--background-color, white);
+  box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
+}
