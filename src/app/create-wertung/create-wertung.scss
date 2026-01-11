@@ -29,7 +29,7 @@
 }
 
 .tabs > input[type='radio']:checked + label {
-  border-bottom-color: var(--primary);
+  border-bottom-color: white;
 }
 
 .tabs > input[type='radio']:checked + label + .tab-content {
