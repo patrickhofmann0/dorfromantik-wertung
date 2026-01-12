@@ -1,17 +1,49 @@
 <div class="kampagne-visualizer">
-  <svg viewBox="0 0 900 400" class="kampagne-svg">
+  <svg viewBox="0 0 900 450" class="kampagne-svg">
     <!-- Draw paths first (so they appear behind milestones) -->
     @for (pfad of pfade(); track pfad.vonA + '-' + pfad.nachB) {
       @let posA = getPosition(pfad.vonA);
       @let posB = getPosition(pfad.nachB);
       @if (posA && posB) {
-        <line
-          [attr.x1]="posA.x + 60"
-          [attr.y1]="posA.y + 20"
-          [attr.x2]="posB.x + 60"
-          [attr.y2]="posB.y + 20"
-          class="pfad-linie"
-        />
+        <g>
+          <!-- Path line -->
+          <line
+            [attr.x1]="posA.x + 60"
+            [attr.y1]="posA.y + 20"
+            [attr.x2]="posB.x + 60"
+            [attr.y2]="posB.y + 20"
+            class="pfad-linie"
+          />
+
+          <!-- Progress points along the path -->
+          @for (index of createArray(pfad.kosten); track index) {
+            @let point = calculatePointOnLine(
+              posA.x + 60,
+              posA.y + 20,
+              posB.x + 60,
+              posB.y + 20,
+              index,
+              pfad.kosten
+            );
+            <circle
+              [attr.cx]="point.x"
+              [attr.cy]="point.y"
+              r="8"
+              [class.progress-point]="true"
+              [class.progress-completed]="isCheckboxChecked(pfad, index)"
+              [class.progress-incomplete]="!isCheckboxChecked(pfad, index)"
+              (click)="onProgressPointClick(pfad, index)"
+            />
+            <text
+              [attr.x]="point.x"
+              [attr.y]="point.y + 20"
+              class="progress-label"
+              text-anchor="middle"
+            >
+              {{ index + 1 }}
+            </text>
+          }
+        </g>
       }
     }
 
@@ -37,27 +69,15 @@
     }
   </svg>
 
-  <!-- Path checkboxes -->
-  <div class="pfade-container">
+  <!-- Summary information -->
+  <div class="fortschritt-summary">
     <h3>Kampagnenfortschritt</h3>
     @for (pfad of pfade(); track pfad.vonA + '-' + pfad.nachB) {
-      <div class="pfad-item">
-        <h4>
-          {{ getMeilensteinLabel(pfad.vonA) }} → {{ getMeilensteinLabel(pfad.nachB) }}
-        </h4>
-        <div class="checkbox-container">
-          @for (index of createArray(pfad.kosten); track index) {
-            <label class="checkbox-label">
-              <input
-                type="checkbox"
-                [checked]="isCheckboxChecked(pfad, index)"
-                (change)="onCheckboxChange(pfad, index, $event)"
-              />
-              <span>{{ index + 1 }}</span>
-            </label>
-          }
-        </div>
-        <div class="fortschritt-info">Fortschritt: {{ pfad.fortschritt }} / {{ pfad.kosten }}</div>
+      <div class="pfad-summary">
+        <span class="pfad-name">
+          {{ getMeilensteinLabel(pfad.vonA) }} → {{ getMeilensteinLabel(pfad.nachB) }}:
+        </span>
+        <span class="pfad-fortschritt">{{ pfad.fortschritt }} / {{ pfad.kosten }}</span>
       </div>
     }
   </div>

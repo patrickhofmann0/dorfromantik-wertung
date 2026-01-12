@@ -10,6 +10,11 @@ interface MeilensteinPosition {
   label: string;
 }
 
+interface Point {
+  x: number;
+  y: number;
+}
+
 @Component({
   selector: 'app-kampagne-fortschritt-visualizer',
   imports: [CommonModule, FormsModule],
@@ -76,12 +81,26 @@ export class KampagneFortschrittVisualizer {
     return pos?.label || meilenstein;
   }
 
-  onCheckboxChange(pfad: KampagnePfad, index: number, event: Event): void {
-    const checked = (event.target as HTMLInputElement).checked;
-    if (checked) {
-      pfad.fortschritt = Math.max(pfad.fortschritt, index + 1);
-    } else {
+  calculatePointOnLine(x1: number, y1: number, x2: number, y2: number, index: number, total: number): Point {
+    // Calculate position along the line for progress points
+    // Add some offset to avoid overlapping with milestones
+    const segmentLength = 1 / (total + 1);
+    const t = segmentLength * (index + 1);
+    
+    return {
+      x: x1 + (x2 - x1) * t,
+      y: y1 + (y2 - y1) * t,
+    };
+  }
+
+  onProgressPointClick(pfad: KampagnePfad, index: number): void {
+    // Toggle: if this point is completed, uncomplete from here; if incomplete, complete up to here
+    if (pfad.fortschritt > index) {
+      // Clicking a completed point - set progress to this point (uncomplete it and everything after)
       pfad.fortschritt = index;
+    } else {
+      // Clicking an incomplete point - complete up to and including this point
+      pfad.fortschritt = index + 1;
     }
     this.pfadeChange.emit(this.pfade());
   }
