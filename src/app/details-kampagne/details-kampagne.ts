@@ -4,10 +4,12 @@ import { KampagneService } from '../kampagne-service';
 import { Kampagne } from '../model/kampagne';
 import { DatePipe } from '@angular/common';
 import { Wertung } from '../model/wertung';
+import { KampagneFortschrittVisualizer } from '../kampagne-fortschritt-visualizer/kampagne-fortschritt-visualizer';
+import { KampagnePfad } from '../model/kampagneFortschritt';
 
 @Component({
   selector: 'app-details-kampagne',
-  imports: [DatePipe],
+  imports: [DatePipe, KampagneFortschrittVisualizer],
   templateUrl: './details-kampagne.html',
   styleUrl: './details-kampagne.scss',
 })
@@ -38,5 +40,10 @@ export class DetailsKampagne implements OnInit {
 
   navigateToCreateWertung() {
     this.router.navigate(['/create-wertung', this.id]);
+  }
+
+  onPfadeChange(pfade: KampagnePfad[]): void {
+    this.kampagne.pfade = pfade;
+    this.kampagneService.updateKampagne(this.kampagne);
   }
 }

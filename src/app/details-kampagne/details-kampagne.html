@@ -4,6 +4,12 @@
 
     <button class="btn-primary" (click)="navigateToCreateWertung()">Neue Wertung</button>
 
+    <!-- Campaign Progress Visualizer -->
+    <app-kampagne-fortschritt-visualizer
+      [pfade]="kampagne.pfade"
+      (pfadeChange)="onPfadeChange($event)"
+    />
+
     @for (wertung of kampagne.wertungen; track wertung.id) {
       <details class="accordion">
         <summary>{{ wertung.dateCreated | date: 'dd.MM.yyyy HH:mm' }}</summary>
