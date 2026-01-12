@@ -51,7 +51,7 @@
               <input
                 type="checkbox"
                 [checked]="isCheckboxChecked(pfad, index)"
-                (change)="onCheckboxChange(pfad, index, $any($event.target).checked)"
+                (change)="onCheckboxChange(pfad, index, $event)"
               />
               <span>{{ index + 1 }}</span>
             </label>

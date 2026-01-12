@@ -76,13 +76,12 @@ export class KampagneFortschrittVisualizer {
     return pos?.label || meilenstein;
   }
 
-  onCheckboxChange(pfad: KampagnePfad, index: number, checked: boolean): void {
+  onCheckboxChange(pfad: KampagnePfad, index: number, event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
     if (checked) {
       pfad.fortschritt = Math.max(pfad.fortschritt, index + 1);
     } else {
-      if (pfad.fortschritt === index + 1) {
-        pfad.fortschritt = index;
-      }
+      pfad.fortschritt = index;
     }
     this.pfadeChange.emit(this.pfade());
   }
