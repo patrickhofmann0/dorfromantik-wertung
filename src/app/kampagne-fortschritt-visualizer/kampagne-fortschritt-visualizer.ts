@@ -83,7 +83,7 @@ export class KampagneFortschrittVisualizer {
 
   calculatePointOnLine(x1: number, y1: number, x2: number, y2: number, index: number, total: number): Point {
     // Calculate position along the line for progress points
-    // Add some offset to avoid overlapping with milestones
+    // Distribute points evenly between the milestones (not at the edges)
     const segmentLength = 1 / (total + 1);
     const t = segmentLength * (index + 1);
     
