@@ -51,7 +51,7 @@
     }
 
     <!-- Draw milestones -->
-    @for (position of meilensteinPositionen; track position.meilenstein) {
+    @for (position of meilensteinPositionen(); track position.meilenstein) {
       <g>
         <rect
           [attr.x]="position.x"
