@@ -26,48 +26,48 @@ export class KampagneFortschrittVisualizer {
   pfade = input.required<KampagnePfad[]>();
   pfadeChange = output<KampagnePfad[]>();
 
-  // Define positions for each milestone for visualization
+  // Define positions for each milestone for visualization (vertical layout)
   meilensteinPositionen: MeilensteinPosition[] = [
     {
       meilenstein: KampagneMeilenstein.START,
-      x: 50,
-      y: 200,
+      x: 200,
+      y: 50,
       label: 'Start',
     },
     {
       meilenstein: KampagneMeilenstein.ERSTE_SCHACHTEL_OFFNEN,
       x: 200,
-      y: 200,
+      y: 150,
       label: 'Erste Schachtel',
     },
     {
       meilenstein: KampagneMeilenstein.ZWEITE_SCHACHTEL_OFFNEN,
-      x: 350,
-      y: 200,
+      x: 200,
+      y: 250,
       label: 'Zweite Schachtel',
     },
     {
       meilenstein: KampagneMeilenstein.BAUERNDORF_ERREICHT,
-      x: 500,
-      y: 200,
+      x: 200,
+      y: 350,
       label: 'Bauerndorf',
     },
     {
       meilenstein: KampagneMeilenstein.WALDDORF_ERREICHT,
-      x: 650,
-      y: 100,
+      x: 100,
+      y: 450,
       label: 'Walddorf',
     },
     {
       meilenstein: KampagneMeilenstein.STADTDORF_ERREICHT,
-      x: 650,
-      y: 300,
+      x: 300,
+      y: 450,
       label: 'Stadtdorf',
     },
     {
       meilenstein: KampagneMeilenstein.BAECKERDORF_ERREICHT,
-      x: 800,
-      y: 200,
+      x: 200,
+      y: 550,
       label: 'Bäckerdorf',
     },
   ];
@@ -94,6 +94,11 @@ export class KampagneFortschrittVisualizer {
   }
 
   onProgressPointClick(pfad: KampagnePfad, index: number): void {
+    // Check if this point is clickable based on progressive activation
+    if (!this.isProgressPointClickable(pfad, index)) {
+      return;
+    }
+
     // Toggle: if this point is completed, uncomplete from here; if incomplete, complete up to here
     if (pfad.fortschritt > index) {
       // Clicking a completed point - set progress to this point (uncomplete it and everything after)
@@ -103,6 +108,36 @@ export class KampagneFortschrittVisualizer {
       pfad.fortschritt = index + 1;
     }
     this.pfadeChange.emit(this.pfade());
+  }
+
+  isProgressPointClickable(pfad: KampagnePfad, index: number): boolean {
+    // Only the next uncompleted point is clickable, or any completed point can be clicked to undo
+    // Special case: at milestones, all adjacent path first checkboxes are active
+    
+    // If this is a completed point, it's clickable (to undo)
+    if (pfad.fortschritt > index) {
+      return true;
+    }
+    
+    // For incomplete points, only the next one is clickable
+    if (pfad.fortschritt === index) {
+      // Check if the previous path (leading to this milestone) is completed
+      const previousMilestoneReached = this.isMilestoneReached(pfad.vonA);
+      return previousMilestoneReached;
+    }
+    
+    return false;
+  }
+
+  isMilestoneReached(meilenstein: KampagneMeilenstein): boolean {
+    // Start is always reached
+    if (meilenstein === KampagneMeilenstein.START) {
+      return true;
+    }
+    
+    // Check if any path leading to this milestone is completed
+    const pathsToMilestone = this.pfade().filter(p => p.nachB === meilenstein);
+    return pathsToMilestone.some(p => p.fortschritt >= p.kosten);
   }
 
   isCheckboxChecked(pfad: KampagnePfad, index: number): boolean {

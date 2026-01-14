@@ -1,5 +1,5 @@
 <div class="kampagne-visualizer">
-  <svg viewBox="0 0 900 450" class="kampagne-svg">
+  <svg viewBox="0 0 500 650" class="kampagne-svg" preserveAspectRatio="xMidYMid meet">
     <!-- Draw paths first (so they appear behind milestones) -->
     @for (pfad of pfade(); track pfad.vonA + '-' + pfad.nachB) {
       @let posA = getPosition(pfad.vonA);
@@ -25,6 +25,7 @@
               index,
               pfad.kosten
             );
+            @let clickable = isProgressPointClickable(pfad, index);
             <circle
               [attr.cx]="point.x"
               [attr.cy]="point.y"
@@ -32,6 +33,8 @@
               [class.progress-point]="true"
               [class.progress-completed]="isCheckboxChecked(pfad, index)"
               [class.progress-incomplete]="!isCheckboxChecked(pfad, index)"
+              [class.progress-clickable]="clickable"
+              [class.progress-disabled]="!clickable"
               (click)="onProgressPointClick(pfad, index)"
             />
             <text
