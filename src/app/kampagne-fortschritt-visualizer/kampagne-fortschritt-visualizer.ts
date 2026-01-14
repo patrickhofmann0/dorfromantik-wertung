@@ -1,4 +1,4 @@
-import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy, computed } from '@angular/core';
 import { KampagnePfad, KampagneMeilenstein } from '../model/kampagneFortschritt';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,15 @@ interface Point {
   y: number;
 }
 
+interface GraphNode {
+  meilenstein: KampagneMeilenstein;
+  label: string;
+  level: number;
+  column: number;
+  incomingEdges: KampagneMeilenstein[];
+  outgoingEdges: KampagneMeilenstein[];
+}
+
 @Component({
   selector: 'app-kampagne-fortschritt-visualizer',
   imports: [CommonModule, FormsModule],
@@ -26,54 +35,132 @@ export class KampagneFortschrittVisualizer {
   pfade = input.required<KampagnePfad[]>();
   pfadeChange = output<KampagnePfad[]>();
 
-  // Define positions for each milestone for visualization (vertical layout)
-  meilensteinPositionen: MeilensteinPosition[] = [
-    {
-      meilenstein: KampagneMeilenstein.START,
-      x: 200,
-      y: 50,
-      label: 'Start',
-    },
-    {
-      meilenstein: KampagneMeilenstein.ERSTE_SCHACHTEL_OFFNEN,
-      x: 200,
-      y: 150,
-      label: 'Erste Schachtel',
-    },
-    {
-      meilenstein: KampagneMeilenstein.ZWEITE_SCHACHTEL_OFFNEN,
-      x: 200,
-      y: 250,
-      label: 'Zweite Schachtel',
-    },
-    {
-      meilenstein: KampagneMeilenstein.BAUERNDORF_ERREICHT,
-      x: 200,
-      y: 350,
-      label: 'Bauerndorf',
-    },
-    {
-      meilenstein: KampagneMeilenstein.WALDDORF_ERREICHT,
-      x: 100,
-      y: 450,
-      label: 'Walddorf',
-    },
-    {
-      meilenstein: KampagneMeilenstein.STADTDORF_ERREICHT,
-      x: 300,
-      y: 450,
-      label: 'Stadtdorf',
-    },
-    {
-      meilenstein: KampagneMeilenstein.BAECKERDORF_ERREICHT,
-      x: 200,
-      y: 550,
-      label: 'Bäckerdorf',
-    },
-  ];
+  // Dynamically calculate milestone positions based on graph structure
+  meilensteinPositionen = computed(() => {
+    return this.calculateMilestoneLayout();
+  });
+
+  private getMeilensteinLabelText(meilenstein: KampagneMeilenstein): string {
+    const labels: Record<KampagneMeilenstein, string> = {
+      [KampagneMeilenstein.START]: 'Start',
+      [KampagneMeilenstein.ERSTE_SCHACHTEL_OFFNEN]: 'Erste Schachtel',
+      [KampagneMeilenstein.ZWEITE_SCHACHTEL_OFFNEN]: 'Zweite Schachtel',
+      [KampagneMeilenstein.BAUERNDORF_ERREICHT]: 'Bauerndorf',
+      [KampagneMeilenstein.WALDDORF_ERREICHT]: 'Walddorf',
+      [KampagneMeilenstein.STADTDORF_ERREICHT]: 'Stadtdorf',
+      [KampagneMeilenstein.BAECKERDORF_ERREICHT]: 'Bäckerdorf',
+    };
+    return labels[meilenstein] || meilenstein;
+  }
+
+  private calculateMilestoneLayout(): MeilensteinPosition[] {
+    // Build graph structure from paths
+    const nodes = new Map<KampagneMeilenstein, GraphNode>();
+    const allMilestones = new Set<KampagneMeilenstein>();
+
+    // Collect all milestones
+    this.pfade().forEach(pfad => {
+      allMilestones.add(pfad.vonA);
+      allMilestones.add(pfad.nachB);
+    });
+
+    // Initialize nodes
+    allMilestones.forEach(milestone => {
+      nodes.set(milestone, {
+        meilenstein: milestone,
+        label: this.getMeilensteinLabelText(milestone),
+        level: 0,
+        column: 0,
+        incomingEdges: [],
+        outgoingEdges: [],
+      });
+    });
+
+    // Build edges
+    this.pfade().forEach(pfad => {
+      const fromNode = nodes.get(pfad.vonA);
+      const toNode = nodes.get(pfad.nachB);
+      if (fromNode && toNode) {
+        fromNode.outgoingEdges.push(pfad.nachB);
+        toNode.incomingEdges.push(pfad.vonA);
+      }
+    });
+
+    // Calculate levels using topological sort (BFS from START)
+    const queue: KampagneMeilenstein[] = [KampagneMeilenstein.START];
+    const visited = new Set<KampagneMeilenstein>();
+    
+    while (queue.length > 0) {
+      const current = queue.shift()!;
+      if (visited.has(current)) continue;
+      visited.add(current);
+
+      const currentNode = nodes.get(current);
+      if (!currentNode) continue;
+
+      // Process outgoing edges
+      currentNode.outgoingEdges.forEach(next => {
+        const nextNode = nodes.get(next);
+        if (nextNode) {
+          // Set level to be at least one more than current
+          nextNode.level = Math.max(nextNode.level, currentNode.level + 1);
+          queue.push(next);
+        }
+      });
+    }
+
+    // Group nodes by level
+    const levels = new Map<number, KampagneMeilenstein[]>();
+    nodes.forEach((node, milestone) => {
+      if (!levels.has(node.level)) {
+        levels.set(node.level, []);
+      }
+      levels.get(node.level)!.push(milestone);
+    });
+
+    // Assign column positions within each level
+    levels.forEach((milestones, level) => {
+      milestones.forEach((milestone, index) => {
+        const node = nodes.get(milestone)!;
+        node.column = index;
+      });
+    });
+
+    // Convert to positions
+    const positions: MeilensteinPosition[] = [];
+    const verticalSpacing = 100;
+    const horizontalSpacing = 200;
+    const baseX = 250; // Center point for single-column levels
+
+    nodes.forEach(node => {
+      const levelNodes = levels.get(node.level)!;
+      const totalInLevel = levelNodes.length;
+      
+      // Center nodes horizontally if multiple in same level
+      let x: number;
+      if (totalInLevel === 1) {
+        x = baseX;
+      } else {
+        // Spread nodes horizontally around center
+        const totalWidth = (totalInLevel - 1) * horizontalSpacing;
+        x = baseX - totalWidth / 2 + node.column * horizontalSpacing;
+      }
+
+      const y = 50 + node.level * verticalSpacing;
+
+      positions.push({
+        meilenstein: node.meilenstein,
+        x,
+        y,
+        label: node.label,
+      });
+    });
+
+    return positions;
+  }
 
   getPosition(meilenstein: KampagneMeilenstein): MeilensteinPosition | undefined {
-    return this.meilensteinPositionen.find((p) => p.meilenstein === meilenstein);
+    return this.meilensteinPositionen().find((p) => p.meilenstein === meilenstein);
   }
 
   getMeilensteinLabel(meilenstein: KampagneMeilenstein): string {
