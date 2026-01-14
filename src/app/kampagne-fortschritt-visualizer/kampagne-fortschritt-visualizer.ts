@@ -41,14 +41,14 @@ export class KampagneFortschrittVisualizer {
   pfade = input.required<KampagnePfad[]>();
   pfadeChange = output<KampagnePfad[]>();
 
-  // Layout configuration
-  private readonly VERTICAL_SPACING = 140; // Increased for better separation
-  private readonly HORIZONTAL_SPACING = 280; // Increased for better separation
-  private readonly BASE_X = 350; // Center point for single-column levels
-  private readonly START_Y = 60;
+  // Layout configuration (horizontal left-to-right flow)
+  private readonly VERTICAL_SPACING = 140; // Spacing between branches (y-axis)
+  private readonly HORIZONTAL_SPACING = 280; // Spacing for progression (x-axis)
+  private readonly BASE_X = 350; // Center point for vertical alignment
+  private readonly START_Y = 60; // Starting x-position for horizontal flow
   private readonly MILESTONE_WIDTH = 120;
   private readonly MILESTONE_HEIGHT = 40;
-  private readonly PADDING = 100; // Increased padding around the graph
+  private readonly PADDING = 100; // Padding around the graph
 
   // Dynamically calculate milestone positions based on graph structure
   meilensteinPositionen = computed(() => {
@@ -210,17 +210,18 @@ export class KampagneFortschrittVisualizer {
       const levelNodes = levels.get(node.level)!;
       const totalInLevel = levelNodes.length;
       
-      // Center nodes horizontally if multiple in same level
-      let x: number;
+      // Horizontal layout: x-position based on level (left-to-right progression)
+      const x = this.START_Y + node.level * this.HORIZONTAL_SPACING;
+      
+      // Center nodes vertically if multiple in same level
+      let y: number;
       if (totalInLevel === 1) {
-        x = this.BASE_X;
+        y = this.BASE_X;
       } else {
-        // Spread nodes horizontally around center
-        const totalWidth = (totalInLevel - 1) * this.HORIZONTAL_SPACING;
-        x = this.BASE_X - totalWidth / 2 + node.column * this.HORIZONTAL_SPACING;
+        // Spread nodes vertically around center
+        const totalHeight = (totalInLevel - 1) * this.VERTICAL_SPACING;
+        y = this.BASE_X - totalHeight / 2 + node.column * this.VERTICAL_SPACING;
       }
-
-      const y = this.START_Y + node.level * this.VERTICAL_SPACING;
 
       positions.push({
         meilenstein: node.meilenstein,
