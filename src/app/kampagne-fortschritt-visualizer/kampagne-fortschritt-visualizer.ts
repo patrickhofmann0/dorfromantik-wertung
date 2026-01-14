@@ -111,8 +111,8 @@ export class KampagneFortschrittVisualizer {
   }
 
   isProgressPointClickable(pfad: KampagnePfad, index: number): boolean {
-    // Only the next uncompleted point is clickable, or any completed point can be clicked to undo
-    // Special case: at milestones, all adjacent path first checkboxes are active
+    // Progressive activation: only the next uncompleted point is clickable
+    // Completed points can be clicked to undo progress
     
     // If this is a completed point, it's clickable (to undo)
     if (pfad.fortschritt > index) {
@@ -120,10 +120,9 @@ export class KampagneFortschrittVisualizer {
     }
     
     // For incomplete points, only the next one is clickable
+    // if the starting milestone of this path has been reached
     if (pfad.fortschritt === index) {
-      // Check if the previous path (leading to this milestone) is completed
-      const previousMilestoneReached = this.isMilestoneReached(pfad.vonA);
-      return previousMilestoneReached;
+      return this.isMilestoneReached(pfad.vonA);
     }
     
     return false;

@@ -7,7 +7,7 @@
   width: 100%;
   max-width: 500px;
   height: auto;
-  min-height: 300px;
+  min-height: 500px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   background-color: transparent;
   margin: 0 auto;
@@ -36,7 +36,7 @@
 
 .progress-point {
   stroke-width: 2;
-  transition: none; /* Disable transitions to prevent flickering */
+  transition: transform 0.1s ease; /* Fast transition to prevent flickering */
 }
 
 .progress-point.progress-clickable {
