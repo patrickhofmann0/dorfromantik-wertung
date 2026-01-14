@@ -24,6 +24,12 @@ interface GraphNode {
   outgoingEdges: KampagneMeilenstein[];
 }
 
+interface PathGeometry {
+  pfad: KampagnePfad;
+  pathData: string; // SVG path data for curved lines
+  points: Point[]; // Progress point positions along the curve
+}
+
 @Component({
   selector: 'app-kampagne-fortschritt-visualizer',
   imports: [CommonModule, FormsModule],
@@ -47,6 +53,11 @@ export class KampagneFortschrittVisualizer {
   // Dynamically calculate milestone positions based on graph structure
   meilensteinPositionen = computed(() => {
     return this.calculateMilestoneLayout();
+  });
+
+  // Calculate path geometries with curve routing to avoid overlaps
+  pathGeometries = computed(() => {
+    return this.calculatePathGeometries();
   });
 
   // Calculate viewBox dimensions dynamically based on milestone positions
@@ -295,5 +306,112 @@ export class KampagneFortschrittVisualizer {
 
   createArray(length: number): number[] {
     return Array.from({ length }, (_, i) => i);
+  }
+
+  private calculatePathGeometries(): PathGeometry[] {
+    const geometries: PathGeometry[] = [];
+    const positions = this.meilensteinPositionen();
+
+    // Group paths by source and target to detect parallel edges
+    const pathsByEndpoints = new Map<string, KampagnePfad[]>();
+    
+    this.pfade().forEach(pfad => {
+      const key = `${pfad.vonA}-${pfad.nachB}`;
+      const reverseKey = `${pfad.nachB}-${pfad.vonA}`;
+      
+      if (!pathsByEndpoints.has(key)) {
+        pathsByEndpoints.set(key, []);
+      }
+      pathsByEndpoints.get(key)!.push(pfad);
+      
+      // Also track reverse direction for parallel edge detection
+      if (!pathsByEndpoints.has(reverseKey)) {
+        pathsByEndpoints.set(reverseKey, []);
+      }
+    });
+
+    this.pfade().forEach(pfad => {
+      const posA = positions.find(p => p.meilenstein === pfad.vonA);
+      const posB = positions.find(p => p.meilenstein === pfad.nachB);
+
+      if (!posA || !posB) {
+        return;
+      }
+
+      const x1 = posA.x + this.MILESTONE_WIDTH / 2;
+      const y1 = posA.y + this.MILESTONE_HEIGHT / 2;
+      const x2 = posB.x + this.MILESTONE_WIDTH / 2;
+      const y2 = posB.y + this.MILESTONE_HEIGHT / 2;
+
+      // Check if there's a parallel edge (reverse direction)
+      const key = `${pfad.vonA}-${pfad.nachB}`;
+      const reverseKey = `${pfad.nachB}-${pfad.vonA}`;
+      const hasParallelEdge = this.pfade().some(p => 
+        p.vonA === pfad.nachB && p.nachB === pfad.vonA
+      );
+
+      let pathData: string;
+      let points: Point[] = [];
+
+      if (hasParallelEdge) {
+        // Use curved path to avoid overlap
+        const offsetDistance = 30; // Distance to offset the curve
+        
+        // Calculate midpoint
+        const mx = (x1 + x2) / 2;
+        const my = (y1 + y2) / 2;
+        
+        // Calculate perpendicular offset
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const length = Math.sqrt(dx * dx + dy * dy);
+        
+        // Perpendicular vector
+        const px = -dy / length * offsetDistance;
+        const py = dx / length * offsetDistance;
+        
+        // Control point for quadratic bezier
+        const cx = mx + px;
+        const cy = my + py;
+        
+        // SVG quadratic bezier path
+        pathData = `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`;
+        
+        // Calculate points along the curve for progress indicators
+        for (let i = 0; i < pfad.kosten; i++) {
+          const t = (i + 1) / (pfad.kosten + 1);
+          // Quadratic bezier formula: B(t) = (1-t)²P0 + 2(1-t)tP1 + t²P2
+          const px = (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * cx + t * t * x2;
+          const py = (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * cy + t * t * y2;
+          points.push({ x: px, y: py });
+        }
+      } else {
+        // Straight line
+        pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
+        
+        // Calculate points along straight line
+        for (let i = 0; i < pfad.kosten; i++) {
+          const t = (i + 1) / (pfad.kosten + 1);
+          points.push({
+            x: x1 + (x2 - x1) * t,
+            y: y1 + (y2 - y1) * t,
+          });
+        }
+      }
+
+      geometries.push({
+        pfad,
+        pathData,
+        points,
+      });
+    });
+
+    return geometries;
+  }
+
+  getPathGeometry(pfad: KampagnePfad): PathGeometry | undefined {
+    return this.pathGeometries().find(g => 
+      g.pfad.vonA === pfad.vonA && g.pfad.nachB === pfad.nachB
+    );
   }
 }

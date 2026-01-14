@@ -4,53 +4,39 @@
     class="kampagne-svg" 
     preserveAspectRatio="xMidYMid meet">
     <!-- Draw paths first (so they appear behind milestones) -->
-    @for (pfad of pfade(); track pfad.vonA + '-' + pfad.nachB) {
-      @let posA = getPosition(pfad.vonA);
-      @let posB = getPosition(pfad.nachB);
-      @if (posA && posB) {
-        <g>
-          <!-- Path line -->
-          <line
-            [attr.x1]="posA.x + 60"
-            [attr.y1]="posA.y + 20"
-            [attr.x2]="posB.x + 60"
-            [attr.y2]="posB.y + 20"
-            class="pfad-linie"
-          />
+    @for (geometry of pathGeometries(); track geometry.pfad.vonA + '-' + geometry.pfad.nachB) {
+      <g>
+        <!-- Path line (curved or straight) -->
+        <path
+          [attr.d]="geometry.pathData"
+          class="pfad-linie"
+          fill="none"
+        />
 
-          <!-- Progress points along the path -->
-          @for (index of createArray(pfad.kosten); track index) {
-            @let point = calculatePointOnLine(
-              posA.x + 60,
-              posA.y + 20,
-              posB.x + 60,
-              posB.y + 20,
-              index,
-              pfad.kosten
-            );
-            @let clickable = isProgressPointClickable(pfad, index);
-            <circle
-              [attr.cx]="point.x"
-              [attr.cy]="point.y"
-              r="8"
-              [class.progress-point]="true"
-              [class.progress-completed]="isCheckboxChecked(pfad, index)"
-              [class.progress-incomplete]="!isCheckboxChecked(pfad, index)"
-              [class.progress-clickable]="clickable"
-              [class.progress-disabled]="!clickable"
-              (click)="onProgressPointClick(pfad, index)"
-            />
-            <text
-              [attr.x]="point.x"
-              [attr.y]="point.y + 20"
-              class="progress-label"
-              text-anchor="middle"
-            >
-              {{ index + 1 }}
-            </text>
-          }
-        </g>
-      }
+        <!-- Progress points along the path -->
+        @for (point of geometry.points; track $index) {
+          @let clickable = isProgressPointClickable(geometry.pfad, $index);
+          <circle
+            [attr.cx]="point.x"
+            [attr.cy]="point.y"
+            r="8"
+            [class.progress-point]="true"
+            [class.progress-completed]="isCheckboxChecked(geometry.pfad, $index)"
+            [class.progress-incomplete]="!isCheckboxChecked(geometry.pfad, $index)"
+            [class.progress-clickable]="clickable"
+            [class.progress-disabled]="!clickable"
+            (click)="onProgressPointClick(geometry.pfad, $index)"
+          />
+          <text
+            [attr.x]="point.x"
+            [attr.y]="point.y + 20"
+            class="progress-label"
+            text-anchor="middle"
+          >
+            {{ $index + 1 }}
+          </text>
+        }
+      </g>
     }
 
     <!-- Draw milestones -->
