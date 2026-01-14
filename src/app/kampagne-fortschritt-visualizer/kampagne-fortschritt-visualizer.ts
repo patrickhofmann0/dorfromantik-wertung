@@ -42,13 +42,13 @@ export class KampagneFortschrittVisualizer {
   pfadeChange = output<KampagnePfad[]>();
 
   // Layout configuration
-  private readonly VERTICAL_SPACING = 100;
-  private readonly HORIZONTAL_SPACING = 200;
-  private readonly BASE_X = 250; // Center point for single-column levels
-  private readonly START_Y = 50;
+  private readonly VERTICAL_SPACING = 140; // Increased for better separation
+  private readonly HORIZONTAL_SPACING = 280; // Increased for better separation
+  private readonly BASE_X = 350; // Center point for single-column levels
+  private readonly START_Y = 60;
   private readonly MILESTONE_WIDTH = 120;
   private readonly MILESTONE_HEIGHT = 40;
-  private readonly PADDING = 50; // Padding around the graph
+  private readonly PADDING = 100; // Increased padding around the graph
 
   // Dynamically calculate milestone positions based on graph structure
   meilensteinPositionen = computed(() => {
@@ -363,7 +363,7 @@ export class KampagneFortschrittVisualizer {
           offsetMultiplier = pathIndex - (totalPaths - 1) / 2;
         }
         
-        const offsetDistance = 35; // Base distance to offset the curve
+        const offsetDistance = 60; // Increased offset distance for more visible curves
         
         // Calculate midpoint
         const mx = (x1 + x2) / 2;
