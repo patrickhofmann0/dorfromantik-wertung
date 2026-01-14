@@ -1,5 +1,8 @@
 <div class="kampagne-visualizer">
-  <svg viewBox="0 0 500 650" class="kampagne-svg" preserveAspectRatio="xMidYMid meet">
+  <svg 
+    [attr.viewBox]="viewBoxDimensions().x + ' ' + viewBoxDimensions().y + ' ' + viewBoxDimensions().width + ' ' + viewBoxDimensions().height" 
+    class="kampagne-svg" 
+    preserveAspectRatio="xMidYMid meet">
     <!-- Draw paths first (so they appear behind milestones) -->
     @for (pfad of pfade(); track pfad.vonA + '-' + pfad.nachB) {
       @let posA = getPosition(pfad.vonA);

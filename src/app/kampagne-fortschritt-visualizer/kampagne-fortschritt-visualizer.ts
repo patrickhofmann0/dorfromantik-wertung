@@ -40,10 +40,41 @@ export class KampagneFortschrittVisualizer {
   private readonly HORIZONTAL_SPACING = 200;
   private readonly BASE_X = 250; // Center point for single-column levels
   private readonly START_Y = 50;
+  private readonly MILESTONE_WIDTH = 120;
+  private readonly MILESTONE_HEIGHT = 40;
+  private readonly PADDING = 50; // Padding around the graph
 
   // Dynamically calculate milestone positions based on graph structure
   meilensteinPositionen = computed(() => {
     return this.calculateMilestoneLayout();
+  });
+
+  // Calculate viewBox dimensions dynamically based on milestone positions
+  viewBoxDimensions = computed(() => {
+    const positions = this.meilensteinPositionen();
+    if (positions.length === 0) {
+      return { x: 0, y: 0, width: 500, height: 650 };
+    }
+
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+
+    positions.forEach(pos => {
+      minX = Math.min(minX, pos.x);
+      minY = Math.min(minY, pos.y);
+      maxX = Math.max(maxX, pos.x + this.MILESTONE_WIDTH);
+      maxY = Math.max(maxY, pos.y + this.MILESTONE_HEIGHT);
+    });
+
+    // Add padding
+    const x = minX - this.PADDING;
+    const y = minY - this.PADDING;
+    const width = (maxX - minX) + (2 * this.PADDING);
+    const height = (maxY - minY) + (2 * this.PADDING);
+
+    return { x, y, width, height };
   });
 
   private getMeilensteinLabelText(meilenstein: KampagneMeilenstein): string {
