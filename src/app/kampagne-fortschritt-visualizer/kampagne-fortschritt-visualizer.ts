@@ -312,22 +312,14 @@ export class KampagneFortschrittVisualizer {
     const geometries: PathGeometry[] = [];
     const positions = this.meilensteinPositionen();
 
-    // Group paths by source and target to detect parallel edges
-    const pathsByEndpoints = new Map<string, KampagnePfad[]>();
+    // Group paths by their target to detect multiple incoming edges
+    const pathsByTarget = new Map<KampagneMeilenstein, KampagnePfad[]>();
     
     this.pfade().forEach(pfad => {
-      const key = `${pfad.vonA}-${pfad.nachB}`;
-      const reverseKey = `${pfad.nachB}-${pfad.vonA}`;
-      
-      if (!pathsByEndpoints.has(key)) {
-        pathsByEndpoints.set(key, []);
+      if (!pathsByTarget.has(pfad.nachB)) {
+        pathsByTarget.set(pfad.nachB, []);
       }
-      pathsByEndpoints.get(key)!.push(pfad);
-      
-      // Also track reverse direction for parallel edge detection
-      if (!pathsByEndpoints.has(reverseKey)) {
-        pathsByEndpoints.set(reverseKey, []);
-      }
+      pathsByTarget.get(pfad.nachB)!.push(pfad);
     });
 
     this.pfade().forEach(pfad => {
@@ -343,19 +335,35 @@ export class KampagneFortschrittVisualizer {
       const x2 = posB.x + this.MILESTONE_WIDTH / 2;
       const y2 = posB.y + this.MILESTONE_HEIGHT / 2;
 
-      // Check if there's a parallel edge (reverse direction)
-      const key = `${pfad.vonA}-${pfad.nachB}`;
-      const reverseKey = `${pfad.nachB}-${pfad.vonA}`;
+      // Check if there are multiple paths to the same target OR a bidirectional path
+      const pathsToTarget = pathsByTarget.get(pfad.nachB) || [];
       const hasParallelEdge = this.pfade().some(p => 
         p.vonA === pfad.nachB && p.nachB === pfad.vonA
       );
+      
+      const needsCurve = hasParallelEdge || pathsToTarget.length > 1;
 
       let pathData: string;
       let points: Point[] = [];
 
-      if (hasParallelEdge) {
-        // Use curved path to avoid overlap
-        const offsetDistance = 30; // Distance to offset the curve
+      if (needsCurve) {
+        // Calculate which offset to use based on the index of this path
+        let offsetMultiplier = 0;
+        
+        if (hasParallelEdge) {
+          // For bidirectional paths, offset one to the left
+          offsetMultiplier = -1;
+        } else if (pathsToTarget.length > 1) {
+          // For multiple incoming paths, distribute them around the target
+          const pathIndex = pathsToTarget.findIndex(p => 
+            p.vonA === pfad.vonA && p.nachB === pfad.nachB
+          );
+          // Center the paths: -1, 0, 1 for 3 paths; -1.5, -0.5, 0.5, 1.5 for 4 paths, etc.
+          const totalPaths = pathsToTarget.length;
+          offsetMultiplier = pathIndex - (totalPaths - 1) / 2;
+        }
+        
+        const offsetDistance = 35; // Base distance to offset the curve
         
         // Calculate midpoint
         const mx = (x1 + x2) / 2;
@@ -366,9 +374,9 @@ export class KampagneFortschrittVisualizer {
         const dy = y2 - y1;
         const length = Math.sqrt(dx * dx + dy * dy);
         
-        // Perpendicular vector
-        const px = -dy / length * offsetDistance;
-        const py = dx / length * offsetDistance;
+        // Perpendicular vector (rotated 90 degrees)
+        const px = -dy / length * offsetDistance * offsetMultiplier;
+        const py = dx / length * offsetDistance * offsetMultiplier;
         
         // Control point for quadratic bezier
         const cx = mx + px;
@@ -386,7 +394,7 @@ export class KampagneFortschrittVisualizer {
           points.push({ x: px, y: py });
         }
       } else {
-        // Straight line
+        // Straight line for single, non-overlapping paths
         pathData = `M ${x1} ${y1} L ${x2} ${y2}`;
         
         // Calculate points along straight line
