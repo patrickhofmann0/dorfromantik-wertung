@@ -35,6 +35,12 @@ export class KampagneFortschrittVisualizer {
   pfade = input.required<KampagnePfad[]>();
   pfadeChange = output<KampagnePfad[]>();
 
+  // Layout configuration
+  private readonly VERTICAL_SPACING = 100;
+  private readonly HORIZONTAL_SPACING = 200;
+  private readonly BASE_X = 250; // Center point for single-column levels
+  private readonly START_Y = 50;
+
   // Dynamically calculate milestone positions based on graph structure
   meilensteinPositionen = computed(() => {
     return this.calculateMilestoneLayout();
@@ -86,27 +92,16 @@ export class KampagneFortschrittVisualizer {
       }
     });
 
-    // Calculate levels using topological sort (BFS from START)
-    const queue: KampagneMeilenstein[] = [KampagneMeilenstein.START];
-    const visited = new Set<KampagneMeilenstein>();
-    
-    while (queue.length > 0) {
-      const current = queue.shift()!;
-      if (visited.has(current)) continue;
-      visited.add(current);
-
-      const currentNode = nodes.get(current);
-      if (!currentNode) continue;
-
-      // Process outgoing edges
-      currentNode.outgoingEdges.forEach(next => {
-        const nextNode = nodes.get(next);
-        if (nextNode) {
-          // Set level to be at least one more than current
-          nextNode.level = Math.max(nextNode.level, currentNode.level + 1);
-          queue.push(next);
-        }
-      });
+    // Calculate levels using BFS from START
+    // Handle case where START might not exist
+    if (!nodes.has(KampagneMeilenstein.START)) {
+      // If no START, use any node as root (first milestone found)
+      const firstMilestone = Array.from(allMilestones)[0];
+      if (firstMilestone) {
+        this.calculateLevelsFromRoot(firstMilestone, nodes);
+      }
+    } else {
+      this.calculateLevelsFromRoot(KampagneMeilenstein.START, nodes);
     }
 
     // Group nodes by level
@@ -127,10 +122,47 @@ export class KampagneFortschrittVisualizer {
     });
 
     // Convert to positions
+    return this.convertNodesToPositions(nodes, levels);
+  }
+
+  private calculateLevelsFromRoot(
+    root: KampagneMeilenstein,
+    nodes: Map<KampagneMeilenstein, GraphNode>
+  ): void {
+    const queue: KampagneMeilenstein[] = [root];
+    const visited = new Set<KampagneMeilenstein>();
+    const queued = new Set<KampagneMeilenstein>([root]); // Track queued nodes to avoid duplicates
+    
+    while (queue.length > 0) {
+      const current = queue.shift()!;
+      if (visited.has(current)) continue;
+      visited.add(current);
+
+      const currentNode = nodes.get(current);
+      if (!currentNode) continue;
+
+      // Process outgoing edges
+      currentNode.outgoingEdges.forEach(next => {
+        const nextNode = nodes.get(next);
+        if (nextNode) {
+          // Set level to be at least one more than current
+          nextNode.level = Math.max(nextNode.level, currentNode.level + 1);
+          
+          // Only add to queue if not already queued or visited
+          if (!queued.has(next) && !visited.has(next)) {
+            queue.push(next);
+            queued.add(next);
+          }
+        }
+      });
+    }
+  }
+
+  private convertNodesToPositions(
+    nodes: Map<KampagneMeilenstein, GraphNode>,
+    levels: Map<number, KampagneMeilenstein[]>
+  ): MeilensteinPosition[] {
     const positions: MeilensteinPosition[] = [];
-    const verticalSpacing = 100;
-    const horizontalSpacing = 200;
-    const baseX = 250; // Center point for single-column levels
 
     nodes.forEach(node => {
       const levelNodes = levels.get(node.level)!;
@@ -139,14 +171,14 @@ export class KampagneFortschrittVisualizer {
       // Center nodes horizontally if multiple in same level
       let x: number;
       if (totalInLevel === 1) {
-        x = baseX;
+        x = this.BASE_X;
       } else {
         // Spread nodes horizontally around center
-        const totalWidth = (totalInLevel - 1) * horizontalSpacing;
-        x = baseX - totalWidth / 2 + node.column * horizontalSpacing;
+        const totalWidth = (totalInLevel - 1) * this.HORIZONTAL_SPACING;
+        x = this.BASE_X - totalWidth / 2 + node.column * this.HORIZONTAL_SPACING;
       }
 
-      const y = 50 + node.level * verticalSpacing;
+      const y = this.START_Y + node.level * this.VERTICAL_SPACING;
 
       positions.push({
         meilenstein: node.meilenstein,
