@@ -73,4 +73,19 @@ export class KampagneService {
       localStorage.setItem(this.keyKampagnenList, JSON.stringify(kampagnenList));
     }
   }
+
+  /**
+   * Updates a campaign.
+   * @param kampagne The campaign to update.
+   */
+  updateKampagne(kampagne: Kampagne): void {
+    const kampagnenList: Kampagne[] = localStorage.getItem(this.keyKampagnenList)
+      ? JSON.parse(localStorage.getItem(this.keyKampagnenList)!)
+      : [];
+    const index = kampagnenList.findIndex((k) => k.id === kampagne.id);
+    if (index !== -1) {
+      kampagnenList[index] = kampagne;
+      localStorage.setItem(this.keyKampagnenList, JSON.stringify(kampagnenList));
+    }
+  }
 }

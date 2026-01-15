@@ -1,0 +1,175 @@
+.kampagne-visualizer {
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.kampagne-svg {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  min-height: 500px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+  margin: 0 auto;
+  display: block;
+}
+
+.pfad-linie {
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 2;
+  stroke-dasharray: 5, 5;
+}
+
+.meilenstein-box {
+  fill: rgba(255, 255, 255, 0.9);
+  stroke: rgba(255, 255, 255, 1);
+  stroke-width: 2;
+  rx: 5;
+}
+
+.meilenstein-text {
+  fill: #2d5016;
+  font-size: 11px;
+  font-weight: bold;
+  dominant-baseline: middle;
+}
+
+.progress-point {
+  stroke-width: 2;
+  transition: transform 0.1s ease; /* Fast transition to prevent flickering */
+}
+
+.progress-point.progress-clickable {
+  cursor: pointer;
+}
+
+.progress-point.progress-clickable:hover {
+  // transform: scale(1.2);
+  // stroke-width: 3;
+}
+
+.progress-point.progress-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.progress-completed {
+  fill: rgba(255, 255, 255, 0.9);
+  stroke: rgba(255, 255, 255, 1);
+}
+
+.progress-incomplete {
+  fill: rgba(255, 255, 255, 0.3);
+  stroke: rgba(255, 255, 255, 0.6);
+}
+
+.progress-label {
+  fill: #2d5016;
+  font-size: 9px;
+  font-weight: bold;
+  pointer-events: none;
+  dominant-baseline: middle;
+}
+
+.fortschritt-summary {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+}
+
+.fortschritt-summary h3 {
+  margin: 0 0 1rem 0;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.pfad-summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pfad-summary:last-child {
+  border-bottom: none;
+}
+
+.pfad-name {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  flex: 1;
+  min-width: 200px;
+}
+
+.pfad-fortschritt {
+  font-weight: bold;
+  color: white;
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .kampagne-visualizer {
+    margin: 1rem 0;
+  }
+
+  .kampagne-svg {
+    max-width: 100%;
+    min-height: 400px;
+  }
+
+  .meilenstein-text {
+    font-size: 10px;
+  }
+
+  .progress-label {
+    font-size: 8px;
+  }
+
+  .fortschritt-summary {
+    padding: 1rem;
+  }
+
+  .fortschritt-summary h3 {
+    font-size: 1.2rem;
+  }
+
+  .pfad-summary {
+    padding: 0.5rem 0;
+  }
+
+  .pfad-name {
+    min-width: 150px;
+    font-size: 0.9rem;
+  }
+
+  .pfad-fortschritt {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .meilenstein-text {
+    font-size: 9px;
+  }
+
+  .progress-label {
+    font-size: 7px;
+  }
+
+  .fortschritt-summary h3 {
+    font-size: 1.1rem;
+  }
+
+  .pfad-name {
+    font-size: 0.85rem;
+  }
+
+  .pfad-fortschritt {
+    font-size: 0.95rem;
+  }
+}

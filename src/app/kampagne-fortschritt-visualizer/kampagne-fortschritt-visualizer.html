@@ -1,0 +1,76 @@
+<div class="kampagne-visualizer">
+  <svg 
+    [attr.viewBox]="viewBoxDimensions().x + ' ' + viewBoxDimensions().y + ' ' + viewBoxDimensions().width + ' ' + viewBoxDimensions().height" 
+    class="kampagne-svg" 
+    preserveAspectRatio="xMidYMid meet">
+    <!-- Draw paths first (so they appear behind milestones) -->
+    @for (geometry of pathGeometries(); track geometry.pfad.vonA + '-' + geometry.pfad.nachB) {
+      <g>
+        <!-- Path line (curved or straight) -->
+        <path
+          [attr.d]="geometry.pathData"
+          class="pfad-linie"
+          fill="none"
+        />
+
+        <!-- Progress points along the path -->
+        @for (point of geometry.points; track $index) {
+          @let clickable = isProgressPointClickable(geometry.pfad, $index);
+          <circle
+            [attr.cx]="point.x"
+            [attr.cy]="point.y"
+            r="8"
+            [class.progress-point]="true"
+            [class.progress-completed]="isCheckboxChecked(geometry.pfad, $index)"
+            [class.progress-incomplete]="!isCheckboxChecked(geometry.pfad, $index)"
+            [class.progress-clickable]="clickable"
+            [class.progress-disabled]="!clickable"
+            (click)="onProgressPointClick(geometry.pfad, $index)"
+          />
+          <text
+            [attr.x]="point.x"
+            [attr.y]="point.y + 20"
+            class="progress-label"
+            text-anchor="middle"
+          >
+            {{ $index + 1 }}
+          </text>
+        }
+      </g>
+    }
+
+    <!-- Draw milestones -->
+    @for (position of meilensteinPositionen(); track position.meilenstein) {
+      <g>
+        <rect
+          [attr.x]="position.x"
+          [attr.y]="position.y"
+          width="120"
+          height="40"
+          class="meilenstein-box"
+        />
+        <text
+          [attr.x]="position.x + 60"
+          [attr.y]="position.y + 25"
+          class="meilenstein-text"
+          text-anchor="middle"
+        >
+          {{ position.label }}
+        </text>
+      </g>
+    }
+  </svg>
+
+  <!-- Summary information -->
+  <div class="fortschritt-summary">
+    <h3>Kampagnenfortschritt</h3>
+    @for (pfad of pfade(); track pfad.vonA + '-' + pfad.nachB) {
+      <div class="pfad-summary">
+        <span class="pfad-name">
+          {{ getMeilensteinLabel(pfad.vonA) }} → {{ getMeilensteinLabel(pfad.nachB) }}:
+        </span>
+        <span class="pfad-fortschritt">{{ pfad.fortschritt }} / {{ pfad.kosten }}</span>
+      </div>
+    }
+  </div>
+</div>
