@@ -41,11 +41,11 @@ export class KampagneFortschrittVisualizer {
   pfade = input.required<KampagnePfad[]>();
   pfadeChange = output<KampagnePfad[]>();
 
-  // Layout configuration (horizontal left-to-right flow)
-  private readonly VERTICAL_SPACING = 140; // Spacing between branches (y-axis)
-  private readonly HORIZONTAL_SPACING = 280; // Spacing for progression (x-axis)
-  private readonly BASE_X = 350; // Center point for vertical alignment
-  private readonly START_Y = 60; // Starting x-position for horizontal flow
+  // Layout configuration (vertical top-to-bottom flow with horizontal branches)
+  private readonly VERTICAL_SPACING = 140; // Spacing for progression (y-axis, top-to-bottom)
+  private readonly HORIZONTAL_SPACING = 280; // Spacing between branches (x-axis)
+  private readonly BASE_X = 350; // Center point for horizontal alignment
+  private readonly START_Y = 60; // Starting y-position for vertical flow
   private readonly MILESTONE_WIDTH = 120;
   private readonly MILESTONE_HEIGHT = 40;
   private readonly PADDING = 100; // Padding around the graph
@@ -210,17 +210,17 @@ export class KampagneFortschrittVisualizer {
       const levelNodes = levels.get(node.level)!;
       const totalInLevel = levelNodes.length;
       
-      // Horizontal layout: x-position based on level (left-to-right progression)
-      const x = this.START_Y + node.level * this.HORIZONTAL_SPACING;
+      // Vertical layout: y-position based on level (top-to-bottom progression)
+      const y = this.START_Y + node.level * this.VERTICAL_SPACING;
       
-      // Center nodes vertically if multiple in same level
-      let y: number;
+      // Center nodes horizontally if multiple in same level
+      let x: number;
       if (totalInLevel === 1) {
-        y = this.BASE_X;
+        x = this.BASE_X;
       } else {
-        // Spread nodes vertically around center
-        const totalHeight = (totalInLevel - 1) * this.VERTICAL_SPACING;
-        y = this.BASE_X - totalHeight / 2 + node.column * this.VERTICAL_SPACING;
+        // Spread nodes horizontally around center
+        const totalWidth = (totalInLevel - 1) * this.HORIZONTAL_SPACING;
+        x = this.BASE_X - totalWidth / 2 + node.column * this.HORIZONTAL_SPACING;
       }
 
       positions.push({
